@@ -2,6 +2,18 @@
 #include <stdlib.h>
 #include "mlx.h"
 
+int	build_map()
+{
+	int	filled_map = 1;
+	/*flood_fill with:
+	0 for an empty space,
+	1 for a wall,
+	C for a collectible,
+	E for a map exit,
+	P for the player’s starting position.*/
+	return (filled_map);
+}
+
 int main(void)
 {
 	void	*mlx_ptr;
@@ -18,5 +30,3 @@ int main(void)
 	free(mlx_ptr);
 	return (0);
 }
-
-

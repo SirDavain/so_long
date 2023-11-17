@@ -4,9 +4,6 @@ SRC = game.c
 OBJ = $(SRC:.c=.o)
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
-MLX_DIR = ./mlx //path to directory
-MLX_LIB = $(MLX_DIR)/libmlx_$(UNAME).a
-
 
 ifeq ($(shell uname), Linux)
 	INCLUDES = -I/usr/include -Imlx
@@ -17,22 +14,28 @@ endif
 ifeq ($(shell uname), Linux)
 	MLX_FLAGS = -Lmlx -lmlx -L/usr/lib/X11 -lXext -lX11
 else
-	MLX_FLAGS =
+	MLX_FLAGS = 
 endif
 
-all: $(MLX_LIB) $(NAME)
+ifeq ($(shell uname), Linux)
+	MLX_LIB = libmlx_$(UNAME).a
+else
+	MLX_DIR = ./mlx
+	MLX_LIB = $(MLX_DIR)/libmlx_$(UNAME).a
+	$(MLX_LIB):
+		@make -C $(MLX_DIR)
+endif
+
+all: $(NAME)
 
 %.o: %.c so_long.h
-	$(CC) $(CFLAGS) -c $< -o $@ // to include header file???
+	$(CC) $(CFLAGS) -c $< -o $@
 
 .c.o:
 	$(CC) $(CFLAGS) -c -o $@ $< $(INCLUDES)
 
 $(NAME): $(OBJ)
 	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(MLX_FLAGS)
-
-$(MLX_LIB):
-	@make -C $(MLX_DIR)
 
 clean:
 	rm -f $(OBJ)
