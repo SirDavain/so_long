@@ -9,8 +9,14 @@ typedef struct	s_data
 {
 	void	*win_ptr;
 	void	*mlx_ptr;
-	void	*textures[];
+	void	*textures[5];
 	t_map	*map;
 }				t_data;
+
+typedef struct	s_map
+{
+	/* data */
+}				t_map;
+
 
 #endif
