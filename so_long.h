@@ -4,6 +4,7 @@
 # include <stdlib.h>
 # include "mlx.h"
 # include <X11/keysym.h>
+# include <errno.h>
 
 typedef struct	s_data
 {
@@ -15,7 +16,11 @@ typedef struct	s_data
 
 typedef struct	s_map
 {
-	/* data */
+	char	**map;
+	void	*object;
+	int		x;
+	int		y;
+	int		fish;
 }				t_map;
 
 
