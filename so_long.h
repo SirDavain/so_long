@@ -1,17 +1,43 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   so_long.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/27 14:03:54 by dulrich           #+#    #+#             */
+/*   Updated: 2023/11/27 14:16:16 by dulrich          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef SO_LONG_H
  # define SO_LONG_H
 
 # include <stdlib.h>
+# include <stddef.h>
+# include <aio.h>
+# include <fcntl.h>
+# include <errno.h>
 # include "mlx.h"
 # include "X11/keysym.h"
-# include <errno.h>
+
+typedef struct	s_img
+{
+	void	*dolphin_normal;
+	void	*dolphin_backwards;
+	void	*background;
+	void	*fish;
+}				t_img;
+
 
 typedef struct	s_data
 {
 	void	*win_ptr;
 	void	*mlx_ptr;
-	void	*textures[5];
+	int		size_x;
+	int		size_y;
 	t_map	*map;
+	t_img	*img;
 }				t_data;
 
 typedef struct	s_map
