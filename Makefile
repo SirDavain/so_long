@@ -1,32 +1,31 @@
-NAME = so_long.a
+NAME = so_long
 
 SRC = game.c
 OBJ = $(SRC:.c=.o)
-CC = cc
+CC = gcc
 CFLAGS = -Wall -Wextra -Werror
+UNAME = uname
 
 ifeq ($(shell uname), Linux)
 	INCLUDES = -I/usr/include -Imlx
 else
-	INCLUDES = -I/opt/X11/include -Imlx
+	INCLUDES = -I/usr/local/include -Imlx
 endif
 
 ifeq ($(shell uname), Linux)
 	MLX_FLAGS = -Lmlx -lmlx -L/usr/lib/X11 -lXext -lX11
 else
-	MLX_FLAGS = 
+	MLX_FLAGS = -Lmlx -lmlx -L/usr/X11/lib -lXext -lX11 -framework OpenGL -framework AppKit
 endif
 
 ifeq ($(shell uname), Linux)
 	MLX_LIB = libmlx_$(UNAME).a
 else
-	MLX_DIR = ./mlx
+	MLX_DIR = /mlx
 	MLX_LIB = $(MLX_DIR)/libmlx_$(UNAME).a
-	$(MLX_LIB):
-		@make -C $(MLX_DIR)
 endif
 
-all: $(NAME)
+all: $(NAME) $(MLX_LIB)
 
 %.o: %.c so_long.h
 	$(CC) $(CFLAGS) -c $< -o $@

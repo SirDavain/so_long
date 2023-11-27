@@ -3,7 +3,7 @@
 
 # include <stdlib.h>
 # include "mlx.h"
-# include <X11/keysym.h>
+# include "X11/keysym.h"
 # include <errno.h>
 
 typedef struct	s_data
