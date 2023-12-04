@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 13:58:18 by dulrich           #+#    #+#             */
-/*   Updated: 2023/11/27 15:36:03 by dulrich          ###   ########.fr       */
+/*   Updated: 2023/11/30 10:52:14 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,23 @@ int	get_line_len(int fd)
 	return (len);
 }
 
-int	get_line_nbr(int fd, )
+int	get_line_nbr(int fd)
+{
+	char	*line;
+	int		i;
+	int		linecount;
+
+	linecount = 0;
+	while (1)
+	{
+		line = get_next_line(fd);
+		if (!line)
+			break ;
+		else
+		{
+			free(line);
+			linecount++;
+		}
+	}
+	return (linecount);
+}

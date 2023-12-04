@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 14:03:54 by dulrich           #+#    #+#             */
-/*   Updated: 2023/11/27 15:37:24 by dulrich          ###   ########.fr       */
+/*   Updated: 2023/11/30 10:52:17 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ typedef struct	s_map
 // Utilities
 
 int	find_line_len(int fd);
-
+int	get_line_nbr(int fd);
 
 
 #endif

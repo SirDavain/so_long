@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 14:03:18 by dulrich           #+#    #+#             */
-/*   Updated: 2023/11/27 15:26:55 by dulrich          ###   ########.fr       */
+/*   Updated: 2023/11/30 10:45:18 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,17 @@ void	get_window_size(t_data *data, char *str)
 	fd = open(str, O_RDONLY);
 	if (fd < 0)
 	{
-		perror("Error: Invalid map\n");
+		perror("Error:\n Invalid map\n");
 		exit(EXIT_FAILURE);
 	}
 	if (!ft_strnstr(str, ".ber", ft_strlen(str)))
 	{
-		perror("Error: Map has to be in format .ber\n");
+		perror("Error:\n Map has to be in format .ber\n");
 		exit(EXIT_FAILURE);
 	}
 
 	data->size_x = get_line_len(str);
-	data->size_y = get_line_nbr(fd, );
+	data->size_y = get_line_nbr(fd);
 	mlx_get_screen_size(data->mlx_ptr, data->size_x, data->size_y);
 }
 
