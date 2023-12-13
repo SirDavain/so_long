@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 14:03:54 by dulrich           #+#    #+#             */
-/*   Updated: 2023/11/30 10:52:17 by dulrich          ###   ########.fr       */
+/*   Updated: 2023/12/13 14:21:12 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,14 @@
 # include <errno.h>
 # include "mlx.h"
 # include "X11/keysym.h"
+# include "./libft/libft.h"
+
+# define FALSE 0
+# define TRUE 1
 
 typedef struct	s_img
 {
-	void	*dolphin_normal;
+	void	*dolphin;
 	void	*dolphin_backwards;
 	void	*background;
 	void	*fish;
@@ -38,12 +42,17 @@ typedef struct	s_data
 	int		size_y;
 	t_map	*map;
 	t_img	*img;
+	int		exit_unlocked;
+	int		collected;
+	int		moves;
+	int		won;
 }				t_data;
 
 typedef struct	s_map
 {
 	char	**map;
 	void	*object;
+	char	*path;
 	int		x;
 	int		y;
 	int		fish;

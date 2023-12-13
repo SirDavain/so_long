@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 14:03:18 by dulrich           #+#    #+#             */
-/*   Updated: 2023/11/30 10:45:18 by dulrich          ###   ########.fr       */
+/*   Updated: 2023/12/13 14:24:05 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,18 @@ void	get_window_size(t_data *data, char *str)
 		perror("Error:\n Map has to be in format .ber\n");
 		exit(EXIT_FAILURE);
 	}
-
 	data->size_x = get_line_len(str);
 	data->size_y = get_line_nbr(fd);
 	mlx_get_screen_size(data->mlx_ptr, data->size_x, data->size_y);
+}
+
+void	init_game(t_data *data, char *map_path)
+{
+	data->map.path = map_path;
+	data->exit_unlocked = FALSE;
+	data->collected = 0;
+	data->moves = 0;
+	data->won = FALSE;
 }
 
 int main(int argc, char **argv)
@@ -46,7 +54,13 @@ int main(int argc, char **argv)
 	t_data	data;
 	t_map	map;
 
-	find_window_size(&data, argv[1]);
+	if (argc != 2)
+	{
+		perror("Error:\nWrong number of arguments.\n")
+		exit(1);
+	}
+	get_window_size(&data, argv[1]);
+	init_game(&data, argv[1]);
 	data.mlx_ptr = mlx_init();
 	if (!data.mlx_ptr)
 		return (1);
