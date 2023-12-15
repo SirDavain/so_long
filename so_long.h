@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 14:03:54 by dulrich           #+#    #+#             */
-/*   Updated: 2023/12/13 14:21:12 by dulrich          ###   ########.fr       */
+/*   Updated: 2023/12/15 09:55:05 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,14 @@ typedef struct	s_data
 	int		collected;
 	int		moves;
 	int		won;
+	int		exit_found;
 }				t_data;
 
 typedef struct	s_map
 {
-	char	**map;
-	void	*object;
 	char	*path;
+	size_t	map_height;
+	size_t	map_width;
 	int		x;
 	int		y;
 	int		fish;

@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 14:03:18 by dulrich           #+#    #+#             */
-/*   Updated: 2023/12/13 14:24:05 by dulrich          ###   ########.fr       */
+/*   Updated: 2023/12/15 10:33:19 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,27 +19,6 @@ int	on_keypress(int keysym, t_data *data)
 	return (0);
 }
 
-void	get_window_size(t_data *data, char *str)
-{
-	int	fd;
-	int	sreen_size;
-
-	fd = open(str, O_RDONLY);
-	if (fd < 0)
-	{
-		perror("Error:\n Invalid map\n");
-		exit(EXIT_FAILURE);
-	}
-	if (!ft_strnstr(str, ".ber", ft_strlen(str)))
-	{
-		perror("Error:\n Map has to be in format .ber\n");
-		exit(EXIT_FAILURE);
-	}
-	data->size_x = get_line_len(str);
-	data->size_y = get_line_nbr(fd);
-	mlx_get_screen_size(data->mlx_ptr, data->size_x, data->size_y);
-}
-
 void	init_game(t_data *data, char *map_path)
 {
 	data->map.path = map_path;
@@ -47,6 +26,33 @@ void	init_game(t_data *data, char *map_path)
 	data->collected = 0;
 	data->moves = 0;
 	data->won = FALSE;
+	data->exit_found = 0;
+}
+
+int	parse_map(t_map *map)
+{
+	int		fd;
+	char	*line;
+
+	ft = open(map->path, O_RDONLY);
+	if (fd < 0)
+		map_error("Map was not found.");
+	map->map_height = 0;
+	map->map_width = 0;
+	line = get_next_line(fd);
+	while (line)
+	{
+		map->map_height++;
+		if (map->map_height == 1)
+			map->map_width = get_line_len(line);
+		if (get_line_len(line) != map->map_width)
+			map_error("The map is not rectangular.");
+		line = get_next_line(fd);
+	}
+	close(fd);
+	if (map->map_height == 0)
+		map_error("Map is empty.");
+	return (0);
 }
 
 int main(int argc, char **argv)
@@ -55,12 +61,13 @@ int main(int argc, char **argv)
 	t_map	map;
 
 	if (argc != 2)
-	{
-		perror("Error:\nWrong number of arguments.\n")
-		exit(1);
-	}
+		map_error("Wrong number of arguments.")
+	if (!ft_strnstr(argv[1], ".ber", ft_strlen(argv[1])))
+		map_error("Map has to be in format .ber.");
 	get_window_size(&data, argv[1]);
 	init_game(&data, argv[1]);
+	parse_map(&data.map);
+
 	data.mlx_ptr = mlx_init();
 	if (!data.mlx_ptr)
 		return (1);
