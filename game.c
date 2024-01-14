@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 14:03:18 by dulrich           #+#    #+#             */
-/*   Updated: 2023/12/15 10:33:19 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/01/15 02:01:50 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 
 int	on_keypress(int keysym, t_data *data)
 {
-	(void)data;
-	printf("Pressed key: %d\n", keysym);
+	
 	return (0);
 }
 
@@ -34,7 +33,7 @@ int	parse_map(t_map *map)
 	int		fd;
 	char	*line;
 
-	ft = open(map->path, O_RDONLY);
+	fd = open(map->path, O_RDONLY);
 	if (fd < 0)
 		map_error("Map was not found.");
 	map->map_height = 0;
@@ -64,11 +63,20 @@ int main(int argc, char **argv)
 		map_error("Wrong number of arguments.")
 	if (!ft_strnstr(argv[1], ".ber", ft_strlen(argv[1])))
 		map_error("Map has to be in format .ber.");
-	get_window_size(&data, argv[1]);
 	init_game(&data, argv[1]);
 	parse_map(&data.map);
-
+	grid_fill(&data);
+	free_tiles(&data);
 	data.mlx_ptr = mlx_init();
+	data.win_ptr = mlx_new_window(data.mlx_ptr, data.map->map_height * SIZE, \
+									data.map.map_width * SIZE);
+	data.img = mlx_new_image(data.mlx_ptr, data.map->map_height * SIZE, \
+									data.map.map_width * SIZE);
+	data.address = mlx_get_data_addr(data.img, &data.bits_per_pixel, \
+									&data.size_line, &data.endian);
+	load_sprites(&data);
+	mlx_hook
+
 	if (!data.mlx_ptr)
 		return (1);
 	win_ptr = mlx_new_window(mlx_ptr, 600, 400, "hello there");
