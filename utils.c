@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 13:58:18 by dulrich           #+#    #+#             */
-/*   Updated: 2024/01/05 07:21:15 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/01/15 14:14:12 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,5 +210,56 @@ void	free_tiles(t_data *data)
 
 void	load_sprites(t_data *data)
 {
-	
+	int	img_w;
+	int	img_h;
+
+	mlx_xpm_file_to_image(data.mlx_ptr, "./img/dolphin", &img_w, &img_h);
+}
+
+int	input_handler(int keycode, t_data *data)
+{
+	if (keycode == ESC)
+		exit_game(data);
+	else if (keycode == UP && !data.won)
+		update_player_pos(&data, (t_point){data->player.position.pixel_x, \
+											data->player.position.pixel_y + 1)};
+	else if (keycode == DOWN && !data.won)
+		update_player_pos(&data, (t_point){data->player.position.pixel_x, \
+											data->player.position.pixel_y - 1)};
+	else if (keycode == RIGHT && !data.won)
+		update_player_pos(&data, (t_point){data->player.position.pixel_x + 1, \
+											data->player.position.pixel_y)};
+	else if (keycode == LEFT && !data.won)
+		update_player_pos(&data, (t_point){data->player.position.pixel_x - 1, \
+											data->player.position.pixel_y)};
+	return (0);
+}
+
+void	exit_game(t_data *data)
+{
+	mlx_destroy_window(data->mlx_ptr, data->win_ptr);
+	exit(0);
+}
+
+int	update_player_pos(t_data *data, t_pixel new_pos)
+{
+	ft_printf("Total moves: %d\n", ++data->moves);
+	if (new_pos.pixel_x < data->map.map_width && new_pos.pixel_y < data->map.map_height)
+	{
+		if (data->map.grid[new_pos.pixel_x][new_pos.pixel_y] == 'C')
+		{
+			data->collected++;
+			data->player.position = new_pos;
+			if (data->collected == data->collectible)
+				data->exit_unlocked == 1;
+		}
+		else if (data->map.grid[new_pos.pixel_x][new_pos.pixel_y] == 'E' \
+																		&& data->exit_unlocked)
+		{
+			data->player.position = new_pos;
+			data->won = TRUE;
+		}
+		else if (data->map.grid[new_pos.pixel_x][new_pos.pixel_y] != '1')
+			data->player.position = new_pos;
+	}
 }

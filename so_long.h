@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 14:03:54 by dulrich           #+#    #+#             */
-/*   Updated: 2024/01/02 15:05:31 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/01/15 14:11:52 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,14 @@
 
 # define FALSE 0
 # define TRUE 1
-#ifndef
-# define SIZE 100
+#ifndef SIZE
+ # define SIZE 100
 #endif
+# define ESC 27
+# define UP 87
+# define DOWN 83
+# define LEFT 65
+# define RIGHT 68
 
 typedef	struct 	s_pixel
 {
@@ -78,6 +83,7 @@ typedef struct	s_data
 	int			bits_per_pixel;
 	int			size_line;
 	int			won;
+	int			moves;
 }				t_data;
 
 typedef struct	s_map
