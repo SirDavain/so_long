@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 13:58:18 by dulrich           #+#    #+#             */
-/*   Updated: 2024/01/15 15:37:28 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/01/15 16:46:44 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,10 +210,22 @@ void	free_tiles(t_data *data)
 
 void	load_sprites(t_data *data)
 {
-	int	img_w;
-	int	img_h;
-
-	mlx_xpm_file_to_image(data.mlx_ptr, "./img/dolphin", &img_w, &img_h);
+	data->bgr_sprite.img = mlx_xpm_file_to_image(data->mlx_ptr, "img/bgr_sprite.xpm", \
+											&bgr_sprite.pixel_w, &bgr_sprite.pixel_h);
+	data->plyr_sprite.img = mlx_xpm_file_to_image(data->mlx_ptr, "img/plyr_sprite.xpm", \
+											&plyr_sprite.pixel_w, &plyr_sprite.pixel_h);
+	data->wall_sprite.img = mlx_xpm_file_to_image(data->mlx_ptr, "img/wall_sprite.xpm", \
+											&wall_sprite.pixel_w, &wall_sprite.pixel_h);
+	data->floor_sprite.img = mlx_xpm_file_to_image(data->mlx_ptr, "img/floor_sprite.xpm", \
+											&floor_sprite.pixel_w, &floor_sprite.pixel_h);
+	data->clctbl_sprite.img = mlx_xpm_file_to_image(data->mlx_ptr, "img/clctbl_sprite.xpm", \
+											&clctbl_sprite.pixel_w, &clctbl_sprite.pixel_h);
+	data->start_sprite.img = mlx_xpm_file_to_image(data->mlx_ptr, "img/start_sprite.xpm", \
+											&start_sprite.pixel_w, &start_sprite.pixel_h);
+	data->exit_sprite.img = mlx_xpm_file_to_image(data->mlx_ptr, "img/exit_sprite.xpm", \
+											&exit_sprite.pixel_w, &exit_sprite.pixel_h);
+	data->win_sprite.img = mlx_xpm_file_to_image(data->mlx_ptr, "img/win_sprite.xpm", \
+											&win_sprite.pixel_w, &win_sprite.pixel_h);
 }
 
 int	input_handler(int keycode, t_data *data)

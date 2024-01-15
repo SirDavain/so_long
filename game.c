@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 14:03:18 by dulrich           #+#    #+#             */
-/*   Updated: 2024/01/15 15:42:02 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/01/15 16:54:26 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,10 @@ int main(int argc, char **argv)
 	data.address = mlx_get_data_addr(data.img, &data.bits_per_pixel, \
 									&data.size_line, &data.endian);
 	load_sprites(&data);
-	mlx_key_hook(data.win_ptr, input_handler(), &data);
-	mlx_loop();
+	mlx_hook(data.win_ptr, 2, 1L << 0, input_handler, &data);
+	mlx_hook();
 	mlx_loop_hook(data.mlx_ptr, render_next_frame(&data), &data);
+	mlx_loop();
 	return (0);
 }
 
