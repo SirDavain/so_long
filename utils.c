@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 13:58:18 by dulrich           #+#    #+#             */
-/*   Updated: 2024/01/15 14:14:12 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/01/15 15:37:28 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,16 +221,16 @@ int	input_handler(int keycode, t_data *data)
 	if (keycode == ESC)
 		exit_game(data);
 	else if (keycode == UP && !data.won)
-		update_player_pos(&data, (t_point){data->player.position.pixel_x, \
+		update_player_pos(&data, (t_pixel){data->player.position.pixel_x, \
 											data->player.position.pixel_y + 1)};
 	else if (keycode == DOWN && !data.won)
-		update_player_pos(&data, (t_point){data->player.position.pixel_x, \
+		update_player_pos(&data, (t_pixel){data->player.position.pixel_x, \
 											data->player.position.pixel_y - 1)};
 	else if (keycode == RIGHT && !data.won)
-		update_player_pos(&data, (t_point){data->player.position.pixel_x + 1, \
+		update_player_pos(&data, (t_pixel){data->player.position.pixel_x + 1, \
 											data->player.position.pixel_y)};
 	else if (keycode == LEFT && !data.won)
-		update_player_pos(&data, (t_point){data->player.position.pixel_x - 1, \
+		update_player_pos(&data, (t_pixel){data->player.position.pixel_x - 1, \
 											data->player.position.pixel_y)};
 	return (0);
 }
@@ -262,4 +262,78 @@ int	update_player_pos(t_data *data, t_pixel new_pos)
 		else if (data->map.grid[new_pos.pixel_x][new_pos.pixel_y] != '1')
 			data->player.position = new_pos;
 	}
+}
+
+void	render_background(t_data *data)
+{
+	t_pixel	start;
+	t_pixel	end;
+
+	start.pixel_x = 0;
+	start.pixel_y = 0;
+	end.pixel_x = data->map.map_width * SIZE;
+	end.pixel_y = data->map.map_height * SIZE;
+	while (start.pixel_y < end.pixel_y)
+	{
+		while (start.pixel_x < end.pixel_x)
+		{
+			mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->bgr_sprite.img, \
+															start.pixel_x, start.pixel_y);
+			start.pixel_x += SIZE;
+		}
+		start.pixel_x = 0;
+		start.pixel_y += SIZE;
+	}
+}
+
+void	render_map(t_data *data)
+{
+	t_pixel	a;
+
+	a.pixel_x = 0;
+	a.pixel_y = 0;
+	while (a.pixel_y < data->map.map_height * SIZE)
+	{
+		while (a.pixel_x < data->map.map_height * SIZE)
+		{
+			if (data->map.grid[a.pixel_x / SIZE][a.pixel_y / SIZE] == '1')
+				put_sprite(data, a, '1');
+			else if (data->map.grid[a.pixel_x / SIZE][a.pixel_y / SIZE] == '0')
+				put_sprite(data, a, '0');
+			else if (data->map.grid[a.pixel_x / SIZE][a.pixel_y / SIZE] == 'C')
+				put_sprite(data, a, 'C');
+			else if (data->map.grid[a.pixel_x / SIZE][a.pixel_y / SIZE] == 'P')
+				put_sprite(data, a, 'P');
+			else if (data->map.grid[a.pixel_x / SIZE][a.pixel_y / SIZE] == 'E')
+				put_sprite(data, a, 'E');
+			a.pixel_x += SIZE;
+		}
+		a.pixel_x = 0;
+		a.pixel_y += SIZE;
+	}
+}
+
+void	render_player(t_data *data)
+{
+	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->plyr_sprite.img, \
+				data->player.position.pixel_x * SIZE, data->player.position.pixel_y * SIZE);
+}
+
+void	put_sprite(t_data *data, t_pixel a, char b)
+{
+	if (b == '1')
+		mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->wall_sprite.img, \
+				a.pixel_x, a.pixel_y);
+	else if (b == '0')
+		mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->floor_sprite.img, \
+				a.pixel_x, a.pixel_y);
+	else if (b == 'C')
+		mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->clctbl_sprite.img, \
+				a.pixel_x, a.pixel_y);
+	else if (b == 'P')
+		mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->start_sprite.img, \
+				a.pixel_x, a.pixel_y);
+	else if (b == 'E')
+		mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->exit_sprite.img, \
+				a.pixel_x, a.pixel_y);
 }

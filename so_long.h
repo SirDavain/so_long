@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 14:03:54 by dulrich           #+#    #+#             */
-/*   Updated: 2024/01/15 14:11:52 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/01/15 15:22:57 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,13 @@ typedef	struct 	s_pixel
 	size_t	pixel_x;
 	size_t	pixel_y;
 }				t_pixel;
+
+typedef	struct 	s_sprite
+{
+	int		pixel_w;
+	int		pixel_h;
+	void	*img;
+}				t_sprite;
 
 typedef struct	s_img
 {
@@ -71,6 +78,13 @@ typedef struct	s_data
 	t_player	player;
 	t_map		*map;
 	t_img		*img;
+	t_sprite	plyr_sprite;
+	t_sprite	bgr_sprite;
+	t_sprite	wall_sprite;
+	t_sprite	floor_sprite;
+	t_sprite	clctbl_sprite;
+	t_sprite	start_sprite;
+	t_sprite	exit_sprite;
 	int			exit_unlocked;
 	int			collectible;
 	int			collected;

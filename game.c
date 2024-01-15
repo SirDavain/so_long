@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 14:03:18 by dulrich           #+#    #+#             */
-/*   Updated: 2024/01/15 14:28:04 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/01/15 15:25:31 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,11 +77,16 @@ int main(int argc, char **argv)
 	load_sprites(&data);
 	mlx_key_hook(data.win_ptr, input_handler(), &data);
 	mlx_loop();
-	mlx_loop_hook(data->win_ptr, render_next_frame, data);
+	mlx_loop_hook(data.mlx_ptr, render_next_frame(&data), &data);
 	return (0);
 }
 
-int	render_next_frame()
+int	render_next_frame(t_data *data)
 {
-	
+	render_background(data);
+	if (!data->won)
+	{
+		render_map(data);
+		render_player(data);
+	}
 }
