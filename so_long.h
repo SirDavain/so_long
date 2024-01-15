@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 14:03:54 by dulrich           #+#    #+#             */
-/*   Updated: 2024/01/15 15:22:57 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/01/15 15:40:00 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ typedef struct	s_data
 	t_sprite	clctbl_sprite;
 	t_sprite	start_sprite;
 	t_sprite	exit_sprite;
+	t_sprite	win_sprite;
 	int			exit_unlocked;
 	int			collectible;
 	int			collected;

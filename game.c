@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 14:03:18 by dulrich           #+#    #+#             */
-/*   Updated: 2024/01/15 15:25:31 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/01/15 15:42:02 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,4 +89,9 @@ int	render_next_frame(t_data *data)
 		render_map(data);
 		render_player(data);
 	}
+	else
+	{
+		mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->win_sprite.img, 0, 0);
+	}
+	return (0);
 }
