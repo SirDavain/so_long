@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 14:03:54 by dulrich           #+#    #+#             */
-/*   Updated: 2024/01/15 16:38:06 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/01/24 15:21:01 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@
 
 typedef	struct 	s_pixel
 {
-	size_t	pixel_x;
-	size_t	pixel_y;
+	size_t	px_x;
+	size_t	px_y;
 }				t_pixel;
 
 typedef	struct 	s_sprite
@@ -78,7 +78,7 @@ typedef struct	s_data
 	t_player	player;
 	t_map		*map;
 	t_img		*img;
-	t_sprite	plyr_sprite;
+	t_sprite	p_sprite;
 	t_sprite	bgr_sprite;
 	t_sprite	wall_sprite;
 	t_sprite	floor_sprite;
@@ -105,8 +105,8 @@ typedef struct	s_map
 {
 	char	**grid;
 	char	*path;
-	size_t	map_height;
-	size_t	map_width;
+	size_t	map_h;
+	size_t	map_w;
 	t_tile	**tiles;
 	int		fd;
 	int		x;
@@ -116,8 +116,41 @@ typedef struct	s_map
 
 // Utilities
 
-int	find_line_len(int fd);
-int	get_line_nbr(int fd);
+void	allocate_lines(t_data *data, t_pixel grid_pos);
+void	count_grid(t_data *data, char c, t_pixel p);
+void	free_tiles(t_data *data);
+int		input_handler(int keycode, t_data *data);
+int		update_player_pos(t_data *data, t_pixel new_pos);
+
+// game.c
+
+int 	main(int argc, char **argv);
+void	init_game(t_data *data, char *map_path);
+int		parse_map(t_map *map);
+int		render_next_frame(t_data *data);
+void	exit_game(t_data *data);
+
+// sprites.c
+
+void	load_sprites(t_data *data);
+void	put_sprite(t_data *data, t_pixel a, char b);
+void	render_background(t_data *data);
+void	render_map(t_data *data);
+void	render_player(t_data *data);
+
+// checker.c
+
+int		found_unknown_char(char c);
+void	map_error(char *str);
+int		missing_walls(t_data *data);
+void	check_for_valid_path(t_data *data, t_pixel p);
+void	map_checker(t_data *data);
+
+// fill.c
+
+void	start_map_filling(t_data *data, t_pixel *p);
+void	fill_tiles(t_data *data, char *line, t_pixel grid_pos);
+int		grid_fill(t_data *data);
 
 
 #endif
