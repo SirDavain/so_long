@@ -6,16 +6,15 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 14:03:18 by dulrich           #+#    #+#             */
-/*   Updated: 2024/01/24 15:18:04 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/01/26 14:05:28 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	t_data	data;
-	t_map	map;
 
 	if (argc != 2)
 		map_error("Wrong number of arguments.");

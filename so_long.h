@@ -6,12 +6,12 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 14:03:54 by dulrich           #+#    #+#             */
-/*   Updated: 2024/01/24 15:21:01 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/01/26 13:56:50 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SO_LONG_H
- # define SO_LONG_H
+# define SO_LONG_H
 
 # include <stdlib.h>
 # include <stddef.h>
@@ -24,50 +24,61 @@
 
 # define FALSE 0
 # define TRUE 1
-#ifndef SIZE
- # define SIZE 100
-#endif
+# ifndef SIZE
+#  define SIZE 100
+# endif
 # define ESC 27
 # define UP 87
 # define DOWN 83
 # define LEFT 65
 # define RIGHT 68
 
-typedef	struct 	s_pixel
+typedef struct s_pixel
 {
 	size_t	px_x;
 	size_t	px_y;
 }				t_pixel;
 
-typedef	struct 	s_sprite
+typedef struct s_sprite
 {
 	int		pixel_w;
 	int		pixel_h;
 	void	*img;
 }				t_sprite;
 
-typedef struct	s_img
+/* typedef struct s_img
 {
 	void	*dolphin;
-	void	*dolphin_backwards;
 	void	*background;
 	void	*fish;
-}				t_img;
+}				t_img; */
 
-typedef	struct 	s_tile
+typedef struct s_tile
 {
 	char	t;
 	int		v;
 }				t_tile;
 
-typedef	struct 	s_player
+typedef struct s_player
 {
 	t_pixel	position;
 	t_pixel	start;
 }				t_player;
 
+typedef struct s_map
+{
+	char	**grid;
+	char	*path;
+	size_t	map_h;
+	size_t	map_w;
+	t_tile	**tiles;
+	int		fd;
+	int		x;
+	int		y;
+	int		fish;
+}				t_map;
 
-typedef struct	s_data
+typedef struct s_data
 {
 	void		*win_ptr;
 	void		*mlx_ptr;
@@ -77,7 +88,6 @@ typedef struct	s_data
 	int			size_y;
 	t_player	player;
 	t_map		*map;
-	t_img		*img;
 	t_sprite	p_sprite;
 	t_sprite	bgr_sprite;
 	t_sprite	wall_sprite;
@@ -98,23 +108,9 @@ typedef struct	s_data
 	int			bits_per_pixel;
 	int			size_line;
 	int			won;
-	int			moves;
 }				t_data;
 
-typedef struct	s_map
-{
-	char	**grid;
-	char	*path;
-	size_t	map_h;
-	size_t	map_w;
-	t_tile	**tiles;
-	int		fd;
-	int		x;
-	int		y;
-	int		fish;
-}				t_map;
-
-// Utilities
+// utils.c
 
 void	allocate_lines(t_data *data, t_pixel grid_pos);
 void	count_grid(t_data *data, char c, t_pixel p);
@@ -124,7 +120,7 @@ int		update_player_pos(t_data *data, t_pixel new_pos);
 
 // game.c
 
-int 	main(int argc, char **argv);
+int		main(int argc, char **argv);
 void	init_game(t_data *data, char *map_path);
 int		parse_map(t_map *map);
 int		render_next_frame(t_data *data);
@@ -143,7 +139,7 @@ void	render_player(t_data *data);
 int		found_unknown_char(char c);
 void	map_error(char *str);
 int		missing_walls(t_data *data);
-void	check_for_valid_path(t_data *data, t_pixel p);
+void	check_for_valid_path(t_pixel p, t_data *data);
 void	map_checker(t_data *data);
 
 // fill.c
@@ -151,6 +147,6 @@ void	map_checker(t_data *data);
 void	start_map_filling(t_data *data, t_pixel *p);
 void	fill_tiles(t_data *data, char *line, t_pixel grid_pos);
 int		grid_fill(t_data *data);
-
+size_t	get_line_len(char *str);
 
 #endif

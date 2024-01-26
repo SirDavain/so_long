@@ -1,6 +1,6 @@
 NAME = so_long
 
-SRC = game.c
+SRC = game.c utils.c fill.c sprites.c checker.c
 OBJ = $(SRC:.c=.o)
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
