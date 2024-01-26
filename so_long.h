@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 14:03:54 by dulrich           #+#    #+#             */
-/*   Updated: 2024/01/26 13:56:50 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/01/26 14:32:25 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ void	allocate_lines(t_data *data, t_pixel grid_pos);
 void	count_grid(t_data *data, char c, t_pixel p);
 void	free_tiles(t_data *data);
 int		input_handler(int keycode, t_data *data);
-int		update_player_pos(t_data *data, t_pixel new_pos);
+void	update_player_pos(t_data *data, t_pixel new_pos);
 
 // game.c
 

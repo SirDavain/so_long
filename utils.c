@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 13:58:18 by dulrich           #+#    #+#             */
-/*   Updated: 2024/01/26 13:11:37 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/01/26 14:32:13 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	count_grid(t_data *data, char c, t_pixel p)
 
 void	free_tiles(t_data *data)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
 	while (i < data->map->map_h)
@@ -54,21 +54,21 @@ int	input_handler(int keycode, t_data *data)
 	if (keycode == ESC)
 		exit_game(data);
 	else if (keycode == UP && !data->won)
-		update_player_pos(&data, (t_pixel){data->player.position.px_x, \
+		update_player_pos(data, (t_pixel){data->player.position.px_x, \
 											data->player.position.px_y + 1});
 	else if (keycode == DOWN && !data->won)
-		update_player_pos(&data, (t_pixel){data->player.position.px_x, \
+		update_player_pos(data, (t_pixel){data->player.position.px_x, \
 											data->player.position.px_y - 1});
 	else if (keycode == RIGHT && !data->won)
-		update_player_pos(&data, (t_pixel){data->player.position.px_x + 1, \
+		update_player_pos(data, (t_pixel){data->player.position.px_x + 1, \
 											data->player.position.px_y});
 	else if (keycode == LEFT && !data->won)
-		update_player_pos(&data, (t_pixel){data->player.position.px_x - 1, \
+		update_player_pos(data, (t_pixel){data->player.position.px_x - 1, \
 											data->player.position.px_y});
 	return (0);
 }
 
-int	update_player_pos(t_data *data, t_pixel new_pos)
+void	update_player_pos(t_data *data, t_pixel new_pos)
 {
 	ft_printf("Total moves: %d\n", ++data->moves);
 	if (new_pos.px_x < data->map->map_w && new_pos.px_y < data->map->map_h)
@@ -78,7 +78,7 @@ int	update_player_pos(t_data *data, t_pixel new_pos)
 			data->collected++;
 			data->player.position = new_pos;
 			if (data->collected == data->collectible)
-				data->exit_unlocked == 1;
+				data->exit_unlocked = 1;
 		}
 		else if (data->map->grid[new_pos.px_x][new_pos.px_y] == 'E' \
 												&& data->exit_unlocked)

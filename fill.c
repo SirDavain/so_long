@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 15:07:19 by dulrich           #+#    #+#             */
-/*   Updated: 2024/01/26 13:40:38 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/01/26 14:44:17 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	grid_fill(t_data *data)
 		line = get_next_line(data->map->fd);
 	}
 	close(data->map->fd);
-	if (missing_walls)
+	if (missing_walls(data))
 		map_error("There is an issue with the walls of the map.");
 	check_for_valid_path(data->player.position, data);
 	map_checker(data);

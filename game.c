@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 14:03:18 by dulrich           #+#    #+#             */
-/*   Updated: 2024/01/26 14:05:28 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/01/26 14:23:43 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	main(int argc, char **argv)
 	if (!ft_strnstr(argv[1], ".ber", ft_strlen(argv[1])))
 		map_error("Map has to be in format .ber.");
 	init_game(&data, argv[1]);
-	parse_map(&data.map);
+	parse_map(data.map);
 	grid_fill(&data);
 	free_tiles(&data);
 	data.mlx_ptr = mlx_init();
@@ -33,7 +33,7 @@ int	main(int argc, char **argv)
 									&data.size_line, &data.endian);
 	load_sprites(&data);
 	mlx_hook(data.win_ptr, 2, 1L << 0, input_handler, &data);
-	mlx_hook(data.win_ptr, 17, 1L << 0, exit_game, &data);
+	//mlx_hook(data.win_ptr, 17, 1L << 0, exit_game, &data);
 	mlx_loop_hook(data.mlx_ptr, render_next_frame, &data);
 	return (0);
 }
