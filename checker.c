@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 14:39:52 by dulrich           #+#    #+#             */
-/*   Updated: 2024/01/26 13:52:14 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/01/29 14:30:20 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ void	check_for_valid_path(t_pixel p, t_data *data)
 	height = data->map->map_h;
 	if (data->map->grid[p.px_x][p.px_y] == '1' || \
 		data->map->tiles[p.px_x][p.px_y].v == 1 || \
-		p.px_x < 0 || p.px_y < 0 || \
 		p.px_x > width || p.px_y > height)
 		return ;
 	data->map->tiles[p.px_x][p.px_y].v = 1;
