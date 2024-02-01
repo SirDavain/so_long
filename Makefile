@@ -1,47 +1,55 @@
-NAME = so_long
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/01/29 16:24:50 by dulrich           #+#    #+#              #
+#    Updated: 2024/02/01 14:33:26 by dulrich          ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
-SRC = game.c utils.c fill.c sprites.c checker.c
-OBJ = $(SRC:.c=.o)
-CC = gcc
-CFLAGS = -Wall -Wextra -Werror
-UNAME = uname
+NAME		= so_long
 
-ifeq ($(shell uname), Linux)
-	INCLUDES = -I/usr/include -Imlx
-else
-	INCLUDES = -I/usr/local/include -Imlx
-endif
+CC 			= gcc
+CFLAGS		= -Wall -Wextra -Werror -g
+MLX_FLAGS	= -lX11 -lm -lbsd -lXext -lmlx
 
-ifeq ($(shell uname), Linux)
-	MLX_FLAGS = -Lmlx -lmlx -L/usr/lib/X11 -lXext -lX11
-else
-	MLX_FLAGS = -Lmlx -lmlx -L/usr/X11/lib -lXext -lX11 -framework OpenGL -framework AppKit
-endif
+LIBFT_DIR	= ./libft 
+SRC_DIR		= src
+OBJ_DIR		= obj
+INC_DIR		= include
+MLX_DIR		= mlx
 
-ifeq ($(shell uname), Linux)
-	MLX_LIB = libmlx_$(UNAME).a
-else
-	MLX_DIR = /mlx
-	MLX_LIB = $(MLX_DIR)/libmlx_$(UNAME).a
-endif
+SRC			= game.c utils.c fill.c checker.c sprites.c
+OBJ			= $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
-all: $(NAME) $(MLX_LIB)
+LIBFT		= $(LIBFT_DIR)/libft.a
+LIBS		= -L$(LIBFT_DIR) -lft
 
-%.o: %.c so_long.h
-	$(CC) $(CFLAGS) -c $< -o $@
+HEADERS		= -I$(INC_DIR) -I$(LIBFT_DIR)-I$(MLX_DIR)
 
-.c.o:
-	$(CC) $(CFLAGS) -c -o $@ $< $(INCLUDES)
+all: $(NAME)
 
-$(NAME): $(OBJ)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(MLX_FLAGS)
+$(NAME): $(LIBFT) $(OBJ) $(MLX_LIB)
+	$(CC) $(CFLAGS) $(OBJ) $(HEADERS) $(LIBS) $(MLX_FLAGS) -o $(NAME)
+
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	@mkdir -p $(@D)
+	$(CC) $(CFLAGS) $(HEADERS) -c $< -o $@
+
+$(LIBFT):
+	$(MAKE) -C $(LIBFT_DIR)
 
 clean:
-	rm -f $(OBJ)
-fclean: clean
+	$(MAKE) -C $(LIBFT_DIR) clean
+	rm -rf $(OBJ_DIR)
+
+fclean:
+	$(MAKE) -C $(LIBFT_DIR) fclean
 	rm -f $(NAME)
+	
 re: fclean all
 
 .PHONY: all clean fclean re
-
-

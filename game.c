@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 14:03:18 by dulrich           #+#    #+#             */
-/*   Updated: 2024/01/26 14:23:43 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/02/01 14:06:28 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	main(int argc, char **argv)
 									&data.size_line, &data.endian);
 	load_sprites(&data);
 	mlx_hook(data.win_ptr, 2, 1L << 0, input_handler, &data);
-	//mlx_hook(data.win_ptr, 17, 1L << 0, exit_game, &data);
+	mlx_hook(data.win_ptr, 17, 1L << 0, exit_game, &data);
 	mlx_loop_hook(data.mlx_ptr, render_next_frame, &data);
 	return (0);
 }
@@ -42,10 +42,14 @@ void	init_game(t_data *data, char *map_path)
 {
 	data->map->path = map_path;
 	data->exit_unlocked = FALSE;
+	data->access_to_exit = FALSE;
+	data->access_to_collectibles = 0;
+	data->collectible = 0;
 	data->collected = 0;
 	data->moves = 0;
 	data->won = FALSE;
 	data->exit_found = 0;
+	data->start_found = 0;
 }
 
 int	parse_map(t_map *map)
@@ -90,7 +94,7 @@ int	render_next_frame(t_data *data)
 	return (0);
 }
 
-void	exit_game(t_data *data)
+int	exit_game(t_data *data)
 {
 	mlx_destroy_window(data->mlx_ptr, data->win_ptr);
 	exit(0);

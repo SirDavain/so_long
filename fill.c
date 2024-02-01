@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 15:07:19 by dulrich           #+#    #+#             */
-/*   Updated: 2024/01/26 14:44:17 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/02/01 11:46:38 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ size_t	get_line_len(char *str)
 {
 	size_t	len;
 
+	len = 0;
 	while (str[len] && str[len] != '\n')
 		len++;
 	return (len);

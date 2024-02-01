@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 14:03:54 by dulrich           #+#    #+#             */
-/*   Updated: 2024/01/29 13:48:08 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/02/01 11:57:40 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 # include <aio.h>
 # include <fcntl.h>
 # include <errno.h>
-# include "mlx.h"
-# include "X11/keysym.h"
+# include <mlx.h>
+# include <X11/keysym.h>
 # include "./libft/libft.h"
 
 # define FALSE 0
@@ -124,7 +124,7 @@ int		main(int argc, char **argv);
 void	init_game(t_data *data, char *map_path);
 int		parse_map(t_map *map);
 int		render_next_frame(t_data *data);
-void	exit_game(t_data *data);
+int		exit_game(t_data *data);
 
 // sprites.c
 
