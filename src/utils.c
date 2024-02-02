@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 13:58:18 by dulrich           #+#    #+#             */
-/*   Updated: 2024/01/26 14:32:13 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/02/02 14:19:54 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	count_grid(t_data *data, char c, t_pixel p)
 
 void	free_tiles(t_data *data)
 {
-	size_t	i;
+	int	i;
 
 	i = 0;
 	while (i < data->map->map_h)

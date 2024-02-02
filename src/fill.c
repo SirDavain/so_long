@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 15:07:19 by dulrich           #+#    #+#             */
-/*   Updated: 2024/02/02 12:47:57 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/02/02 14:21:28 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	grid_fill(t_data *data)
 
 size_t	get_line_len(char *str)
 {
-	size_t	len;
+	unsigned int	len;
 
 	len = 0;
 	while (str[len] && str[len] != '\n')
