@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 15:07:19 by dulrich           #+#    #+#             */
-/*   Updated: 2024/02/01 11:46:38 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/02/02 12:47:57 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,15 @@ size_t	get_line_len(char *str)
 	while (str[len] && str[len] != '\n')
 		len++;
 	return (len);
+}
+
+int	wrong_map_name(char *str)
+{
+	size_t	len;
+
+	len = ft_strlen(str) - 1;
+	if (str[len] == 'r' && str[len - 1] == 'e' && str[len - 2] == 'b' \
+					&& str[len - 3] == '.')
+		return (0);
+	return (1);
 }

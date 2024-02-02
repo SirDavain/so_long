@@ -6,37 +6,35 @@
 #    By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/29 16:24:50 by dulrich           #+#    #+#              #
-#    Updated: 2024/02/01 14:33:26 by dulrich          ###   ########.fr        #
+#    Updated: 2024/02/02 13:51:54 by dulrich          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		= so_long
 
-CC 			= gcc
+CC 			= cc
 CFLAGS		= -Wall -Wextra -Werror -g
 MLX_FLAGS	= -lX11 -lm -lbsd -lXext -lmlx
 
 LIBFT_DIR	= ./libft 
-SRC_DIR		= src
-OBJ_DIR		= obj
-INC_DIR		= include
-MLX_DIR		= mlx
+SRC_DIR		= ./src
+INC_DIR		= ./include
+#MLX_LIB	= mlx
 
 SRC			= game.c utils.c fill.c checker.c sprites.c
-OBJ			= $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
+OBJ			= $(SRC:%.c=%.o)
 
 LIBFT		= $(LIBFT_DIR)/libft.a
 LIBS		= -L$(LIBFT_DIR) -lft
 
-HEADERS		= -I$(INC_DIR) -I$(LIBFT_DIR)-I$(MLX_DIR)
+HEADERS		= -I$(INC_DIR) -I$(LIBFT_DIR)
 
 all: $(NAME)
 
-$(NAME): $(LIBFT) $(OBJ) $(MLX_LIB)
+$(NAME): $(LIBFT) $(OBJ) #$(MLX_LIB)
 	$(CC) $(CFLAGS) $(OBJ) $(HEADERS) $(LIBS) $(MLX_FLAGS) -o $(NAME)
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
-	@mkdir -p $(@D)
+%.o: $(SRC_DIR)/%.c
 	$(CC) $(CFLAGS) $(HEADERS) -c $< -o $@
 
 $(LIBFT):
@@ -44,7 +42,7 @@ $(LIBFT):
 
 clean:
 	$(MAKE) -C $(LIBFT_DIR) clean
-	rm -rf $(OBJ_DIR)
+	rm -f $(OBJ)
 
 fclean:
 	$(MAKE) -C $(LIBFT_DIR) fclean

@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 14:03:54 by dulrich           #+#    #+#             */
-/*   Updated: 2024/02/02 13:04:43 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/02/02 13:52:45 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,8 +121,8 @@ void	update_player_pos(t_data *data, t_pixel new_pos);
 // game.c
 
 int		main(int argc, char **argv);
-void	init_game(t_data *data, char *map_path);
-int		parse_map(t_map *map);
+void	init_game(t_data *data);
+int		parse_map(t_map *map, char *map_path);
 int		render_next_frame(t_data *data);
 int		exit_game(t_data *data);
 

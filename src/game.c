@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 14:03:18 by dulrich           #+#    #+#             */
-/*   Updated: 2024/02/01 14:06:28 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/02/02 14:01:08 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,12 @@ int	main(int argc, char **argv)
 
 	if (argc != 2)
 		map_error("Wrong number of arguments.");
-	if (!ft_strnstr(argv[1], ".ber", ft_strlen(argv[1])))
-		map_error("Map has to be in format .ber.");
-	init_game(&data, argv[1]);
-	parse_map(data.map);
+	/* if (!ft_strnstr(argv[1], ".ber", ft_strlen(argv[1])))
+		map_error("Map has to be in format .ber."); */
+	else if (argc == 2 && wrong_map_name(argv[1]))
+		map_error("Map has to be in format '.ber'.");
+	init_game(&data);
+	parse_map(data.map, argv[1]);
 	grid_fill(&data);
 	free_tiles(&data);
 	data.mlx_ptr = mlx_init();
@@ -38,9 +40,8 @@ int	main(int argc, char **argv)
 	return (0);
 }
 
-void	init_game(t_data *data, char *map_path)
+void	init_game(t_data *data)
 {
-	data->map->path = map_path;
 	data->exit_unlocked = FALSE;
 	data->access_to_exit = FALSE;
 	data->access_to_collectibles = 0;
@@ -52,12 +53,12 @@ void	init_game(t_data *data, char *map_path)
 	data->start_found = 0;
 }
 
-int	parse_map(t_map *map)
+int	parse_map(t_map *map, char *argv)
 {
 	int		fd;
 	char	*line;
 
-	fd = open(map->path, O_RDONLY);
+	fd = open(argv, O_RDONLY);
 	if (fd < 0)
 		map_error("Map was not found.");
 	map->map_h = 0;
