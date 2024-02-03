@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 14:03:18 by dulrich           #+#    #+#             */
-/*   Updated: 2024/02/02 14:55:19 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/02/03 15:00:34 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,26 +15,20 @@
 int	main(int argc, char **argv)
 {
 	t_data	data;
-	t_map	*myMap;
 
 	if (argc != 2)
 		map_error("Wrong number of arguments.");
-	/* if (!ft_strnstr(argv[1], ".ber", ft_strlen(argv[1])))
-		map_error("Map has to be in format .ber."); */
-	else if (argc == 2 && wrong_map_name(argv[1]))
-		map_error("Map has to be in format '.ber'.");
-	init_vars(&data);
-	myMap = malloc(sizeof(t_map));
-	if (!myMap)
-		exit(1);
-	parse_map(myMap, argv[1]);
+	if (!ft_strnstr(argv[1], ".ber", ft_strlen(argv[1])))
+		map_error("Map has to be in format .ber.");
+	init_vars(&data, argv[1]);
+	parse_map(&data.map);
 	grid_fill(&data);
 	free_tiles(&data);
 	data.mlx_ptr = mlx_init();
-	data.win_ptr = mlx_new_window(data.mlx_ptr, data.map->map_h * SIZE, \
-									data.map->map_w * SIZE, "so_long");
-	data.img = mlx_new_image(data.mlx_ptr, data.map->map_h * SIZE, \
-								data.map->map_w * SIZE);
+	data.win_ptr = mlx_new_window(data.mlx_ptr, data.map.map_h * SIZE, \
+									data.map.map_w * SIZE, "so_long");
+	data.img = mlx_new_image(data.mlx_ptr, data.map.map_h * SIZE, \
+								data.map.map_w * SIZE);
 	data.address = mlx_get_data_addr(data.img, &data.bits_per_pixel, \
 										&data.size_line, &data.endian);
 	load_sprites(&data);
@@ -44,8 +38,9 @@ int	main(int argc, char **argv)
 	return (0);
 }
 
-void	init_vars(t_data *data)
+void	init_vars(t_data *data, char *map_path)
 {
+	data->map.path = map_path;
 	data->exit_unlocked = FALSE;
 	data->access_to_exit = FALSE;
 	data->access_to_collectibles = 0;
@@ -57,12 +52,12 @@ void	init_vars(t_data *data)
 	data->start_found = 0;
 }
 
-int	parse_map(t_map *map, char *map_path)
+int	parse_map(t_map *map)
 {
 	int		fd;
 	char	*line;
 
-	fd = open(map_path, O_RDONLY);
+	fd = open(map->path, O_RDONLY);
 	if (fd < 0)
 		map_error("Map was not found.");
 	map->map_h = 0;

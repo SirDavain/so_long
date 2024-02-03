@@ -6,7 +6,7 @@
 #    By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/29 16:24:50 by dulrich           #+#    #+#              #
-#    Updated: 2024/02/02 13:51:54 by dulrich          ###   ########.fr        #
+#    Updated: 2024/02/03 15:13:11 by dulrich          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,6 @@ MLX_FLAGS	= -lX11 -lm -lbsd -lXext -lmlx
 LIBFT_DIR	= ./libft 
 SRC_DIR		= ./src
 INC_DIR		= ./include
-#MLX_LIB	= mlx
 
 SRC			= game.c utils.c fill.c checker.c sprites.c
 OBJ			= $(SRC:%.c=%.o)

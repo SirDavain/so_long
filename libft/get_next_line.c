@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 08:33:17 by dulrich           #+#    #+#             */
-/*   Updated: 2023/11/02 15:38:00 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/02/03 15:19:51 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ char	*read_newline(int fd, char *read_line)
 	if (!buf)
 		return (NULL);
 	read_bytes = 1;
-	while (!ft_strchr(read_line, '\n') && read_bytes != 0)
+	while (!ft_new_strchr(read_line, '\n') && read_bytes != 0)
 	{
 		read_bytes = read(fd, buf, BUFFER_SIZE);
 		if (read_bytes == -1)
@@ -81,7 +81,7 @@ char	*read_newline(int fd, char *read_line)
 			return (NULL);
 		}
 		buf[read_bytes] = '\0';
-		read_line = ft_strjoin(read_line, buf);
+		read_line = ft_new_strjoin(read_line, buf);
 	}
 	free(buf);
 	return (read_line);

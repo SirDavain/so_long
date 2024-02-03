@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 13:58:18 by dulrich           #+#    #+#             */
-/*   Updated: 2024/02/02 14:19:54 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/02/03 17:30:20 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,14 @@
 
 void	allocate_lines(t_data *data, t_pixel grid_pos)
 {
-	data->map->grid[grid_pos.px_y] = malloc((data->map->map_w - 1) \
+	data->map.grid[grid_pos.px_y] = malloc((data->map.map_w - 1) \
 										* sizeof(char));
-	data->map->tiles[grid_pos.px_y] = malloc((data->map->map_w - 1) \
+	if (!data->map.grid[grid_pos.px_y])
+		return ;
+	data->map.tiles[grid_pos.px_y] = malloc((data->map.map_w - 1) \
 										* sizeof(t_tile));
+	if (!data->map.tiles[grid_pos.px_y])
+		return ;
 }
 
 void	count_grid(t_data *data, char c, t_pixel p)
@@ -28,25 +32,25 @@ void	count_grid(t_data *data, char c, t_pixel p)
 		data->player.position = p;
 		data->player.start = p;
 	}
-	else if (data->map->grid[p.px_x][p.px_y] == 'C')
+	else if (data->map.grid[p.px_x][p.px_y] == 'C')
 		data->collectible++;
-	else if (data->map->grid[p.px_x][p.px_y] == 'E')
+	else if (data->map.grid[p.px_x][p.px_y] == 'E')
 		data->exit_found++;
 }
 
 void	free_tiles(t_data *data)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
-	while (i < data->map->map_h)
+	while (i < data->map.map_h)
 	{
-		free(data->map->tiles[i]);
-		data->map->tiles[i] = NULL;
+		free(data->map.tiles[i]);
+		data->map.tiles[i] = NULL;
 		i++;
 	}
-	free(data->map->tiles);
-	data->map->tiles = NULL;
+	free(data->map.tiles);
+	data->map.tiles = NULL;
 }
 
 int	input_handler(int keycode, t_data *data)
@@ -71,22 +75,22 @@ int	input_handler(int keycode, t_data *data)
 void	update_player_pos(t_data *data, t_pixel new_pos)
 {
 	ft_printf("Total moves: %d\n", ++data->moves);
-	if (new_pos.px_x < data->map->map_w && new_pos.px_y < data->map->map_h)
+	if (new_pos.px_x < data->map.map_w && new_pos.px_y < data->map.map_h)
 	{
-		if (data->map->grid[new_pos.px_x][new_pos.px_y] == 'C')
+		if (data->map.grid[new_pos.px_x][new_pos.px_y] == 'C')
 		{
 			data->collected++;
 			data->player.position = new_pos;
 			if (data->collected == data->collectible)
 				data->exit_unlocked = 1;
 		}
-		else if (data->map->grid[new_pos.px_x][new_pos.px_y] == 'E' \
+		else if (data->map.grid[new_pos.px_x][new_pos.px_y] == 'E' \
 												&& data->exit_unlocked)
 		{
 			data->player.position = new_pos;
 			data->won = TRUE;
 		}
-		else if (data->map->grid[new_pos.px_x][new_pos.px_y] != '1')
+		else if (data->map.grid[new_pos.px_x][new_pos.px_y] != '1')
 			data->player.position = new_pos;
 	}
 }

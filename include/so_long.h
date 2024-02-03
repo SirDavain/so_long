@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 14:03:54 by dulrich           #+#    #+#             */
-/*   Updated: 2024/02/02 14:21:57 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/02/03 14:58:15 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ typedef struct s_player
 
 typedef struct s_map
 {
+	char	*path;
 	char	**grid;
 	size_t	map_h;
 	size_t	map_w;
@@ -86,7 +87,7 @@ typedef struct s_data
 	int			size_x;
 	int			size_y;
 	t_player	player;
-	t_map		*map;
+	t_map		map;
 	t_sprite	p_sprite;
 	t_sprite	bgr_sprite;
 	t_sprite	wall_sprite;
@@ -120,8 +121,8 @@ void	update_player_pos(t_data *data, t_pixel new_pos);
 // game.c
 
 int		main(int argc, char **argv);
-void	init_vars(t_data *data);
-int		parse_map(t_map *map, char *map_path);
+void	init_vars(t_data *data, char *map_path);
+int		parse_map(t_map *map);
 int		render_next_frame(t_data *data);
 int		exit_game(t_data *data);
 
@@ -147,6 +148,5 @@ void	start_map_filling(t_data *data, t_pixel *p);
 void	fill_tiles(t_data *data, char *line, t_pixel grid_pos);
 int		grid_fill(t_data *data);
 size_t	get_line_len(char *str);
-int		wrong_map_name(char *str);
 
 #endif
