@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 14:03:18 by dulrich           #+#    #+#             */
-/*   Updated: 2024/02/03 15:00:34 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/02/05 13:52:40 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,15 +54,14 @@ void	init_vars(t_data *data, char *map_path)
 
 int	parse_map(t_map *map)
 {
-	int		fd;
 	char	*line;
 
-	fd = open(map->path, O_RDONLY);
-	if (fd < 0)
+	map->fd = open(map->path, O_RDONLY);
+	if (map->fd < 0)
 		map_error("Map was not found.");
 	map->map_h = 0;
 	map->map_w = 0;
-	line = get_next_line(fd);
+	line = get_next_line(map->fd);
 	while (line)
 	{
 		map->map_h++;
@@ -70,9 +69,9 @@ int	parse_map(t_map *map)
 			map->map_w = get_line_len(line);
 		if (get_line_len(line) != map->map_w)
 			map_error("The map is not rectangular.");
-		line = get_next_line(fd);
+		line = get_next_line(map->fd);
 	}
-	close(fd);
+	close(map->fd);
 	if (map->map_h == 0)
 		map_error("Map is empty.");
 	return (0);

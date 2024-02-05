@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 13:58:18 by dulrich           #+#    #+#             */
-/*   Updated: 2024/02/03 17:30:20 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/02/05 15:18:13 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,12 @@
 
 void	allocate_lines(t_data *data, t_pixel grid_pos)
 {
-	data->map.grid[grid_pos.px_y] = malloc((data->map.map_w - 1) \
-										* sizeof(char));
-	if (!data->map.grid[grid_pos.px_y])
-		return ;
-	data->map.tiles[grid_pos.px_y] = malloc((data->map.map_w - 1) \
-										* sizeof(t_tile));
-	if (!data->map.tiles[grid_pos.px_y])
-		return ;
+	data->map.grid[grid_pos.px_y] = malloc((data->map.map_w - 1) * \
+														sizeof(char));
+	data->map.tiles[grid_pos.px_y] = malloc((data->map.map_w - 1) * \
+														sizeof(t_tile));
+	if (!(data->map.tiles[grid_pos.px_y]) || !(data->map.grid[grid_pos.px_y]))
+		map_error("Error when allocating space.");
 }
 
 void	count_grid(t_data *data, char c, t_pixel p)
