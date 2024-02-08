@@ -6,7 +6,7 @@
 #    By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/29 16:24:50 by dulrich           #+#    #+#              #
-#    Updated: 2024/02/03 15:13:11 by dulrich          ###   ########.fr        #
+#    Updated: 2024/02/08 14:53:14 by dulrich          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,22 +30,21 @@ HEADERS		= -I$(INC_DIR) -I$(LIBFT_DIR)
 
 all: $(NAME)
 
-$(NAME): $(LIBFT) $(OBJ) #$(MLX_LIB)
+$(NAME): $(LIBFT) $(OBJ)
 	$(CC) $(CFLAGS) $(OBJ) $(HEADERS) $(LIBS) $(MLX_FLAGS) -o $(NAME)
 
 %.o: $(SRC_DIR)/%.c
 	$(CC) $(CFLAGS) $(HEADERS) -c $< -o $@
 
 $(LIBFT):
-	$(MAKE) -C $(LIBFT_DIR)
+	@make -C $(LIBFT_DIR)
 
 clean:
-	$(MAKE) -C $(LIBFT_DIR) clean
 	rm -f $(OBJ)
 
-fclean:
-	$(MAKE) -C $(LIBFT_DIR) fclean
+fclean: clean
 	rm -f $(NAME)
+	@make fclean -C $(LIBFT_DIR)
 	
 re: fclean all
 

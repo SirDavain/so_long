@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 14:03:18 by dulrich           #+#    #+#             */
-/*   Updated: 2024/02/05 13:52:40 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/02/08 16:31:08 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int	main(int argc, char **argv)
 		map_error("Map has to be in format .ber.");
 	init_vars(&data, argv[1]);
 	parse_map(&data.map);
+	print_map(&data);
 	grid_fill(&data);
 	free_tiles(&data);
 	data.mlx_ptr = mlx_init();

@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 02:01:40 by dulrich           #+#    #+#             */
-/*   Updated: 2024/01/26 13:35:53 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/02/08 14:54:03 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,8 @@ void	render_background(t_data *data)
 
 	start.px_x = 0;
 	start.px_y = 0;
-	end.px_x = data->map->map_w * SIZE;
-	end.px_y = data->map->map_h * SIZE;
+	end.px_x = data->map.map_w * SIZE;
+	end.px_y = data->map.map_h * SIZE;
 	while (start.px_y < end.px_y)
 	{
 		while (start.px_x < end.px_x)
@@ -87,19 +87,19 @@ void	render_map(t_data *data)
 
 	a.px_x = 0;
 	a.px_y = 0;
-	while (a.px_y < data->map->map_h * SIZE)
+	while (a.px_y < data->map.map_h * SIZE)
 	{
-		while (a.px_x < data->map->map_h * SIZE)
+		while (a.px_x < data->map.map_h * SIZE)
 		{
-			if (data->map->grid[a.px_x / SIZE][a.px_y / SIZE] == '1')
+			if (data->map.grid[a.px_x / SIZE][a.px_y / SIZE] == '1')
 				put_sprite(data, a, '1');
-			else if (data->map->grid[a.px_x / SIZE][a.px_y / SIZE] == '0')
+			else if (data->map.grid[a.px_x / SIZE][a.px_y / SIZE] == '0')
 				put_sprite(data, a, '0');
-			else if (data->map->grid[a.px_x / SIZE][a.px_y / SIZE] == 'C')
+			else if (data->map.grid[a.px_x / SIZE][a.px_y / SIZE] == 'C')
 				put_sprite(data, a, 'C');
-			else if (data->map->grid[a.px_x / SIZE][a.px_y / SIZE] == 'P')
+			else if (data->map.grid[a.px_x / SIZE][a.px_y / SIZE] == 'P')
 				put_sprite(data, a, 'P');
-			else if (data->map->grid[a.px_x / SIZE][a.px_y / SIZE] == 'E')
+			else if (data->map.grid[a.px_x / SIZE][a.px_y / SIZE] == 'E')
 				put_sprite(data, a, 'E');
 			a.px_x += SIZE;
 		}
