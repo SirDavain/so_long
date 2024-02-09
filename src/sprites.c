@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 02:01:40 by dulrich           #+#    #+#             */
-/*   Updated: 2024/02/08 14:54:03 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/02/09 14:20:04 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ void	load_sprites(t_data *data)
 	data->exit_sprite.img = mlx_xpm_file_to_image(data->mlx_ptr, \
 	"img/exit_sprite.xpm", &data->exit_sprite.pixel_w, \
 		&data->exit_sprite.pixel_h);
-	data->win_sprite.img = mlx_xpm_file_to_image(data->mlx_ptr, \
+	/* data->win_sprite.img = mlx_xpm_file_to_image(data->mlx_ptr, \
 	"img/win_sprite.xpm", &data->win_sprite.pixel_w, \
-		&data->win_sprite.pixel_h);
+		&data->win_sprite.pixel_h); */
 }
 
 void	put_sprite(t_data *data, t_pixel a, char b)
@@ -91,15 +91,15 @@ void	render_map(t_data *data)
 	{
 		while (a.px_x < data->map.map_h * SIZE)
 		{
-			if (data->map.grid[a.px_x / SIZE][a.px_y / SIZE] == '1')
+			if (data->map.grid[a.px_y / SIZE][a.px_x / SIZE] == '1')
 				put_sprite(data, a, '1');
-			else if (data->map.grid[a.px_x / SIZE][a.px_y / SIZE] == '0')
+			else if (data->map.grid[a.px_y / SIZE][a.px_x / SIZE] == '0')
 				put_sprite(data, a, '0');
-			else if (data->map.grid[a.px_x / SIZE][a.px_y / SIZE] == 'C')
+			else if (data->map.grid[a.px_y / SIZE][a.px_x / SIZE] == 'C')
 				put_sprite(data, a, 'C');
-			else if (data->map.grid[a.px_x / SIZE][a.px_y / SIZE] == 'P')
+			else if (data->map.grid[a.px_y / SIZE][a.px_x / SIZE] == 'P')
 				put_sprite(data, a, 'P');
-			else if (data->map.grid[a.px_x / SIZE][a.px_y / SIZE] == 'E')
+			else if (data->map.grid[a.px_y / SIZE][a.px_x / SIZE] == 'E')
 				put_sprite(data, a, 'E');
 			a.px_x += SIZE;
 		}

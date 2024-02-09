@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 14:03:54 by dulrich           #+#    #+#             */
-/*   Updated: 2024/02/08 15:38:06 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/02/09 14:57:56 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@
 # define FALSE 0
 # define TRUE 1
 # ifndef SIZE
-#  define SIZE 100
+#  define SIZE 50
 # endif
 # define ESC 27
-# define UP 87
-# define DOWN 83
-# define LEFT 65
-# define RIGHT 68
+# define UP 119
+# define DOWN 115
+# define LEFT 97
+# define RIGHT 100
 
 typedef struct s_pixel
 {

@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 13:58:18 by dulrich           #+#    #+#             */
-/*   Updated: 2024/02/05 15:18:13 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/02/09 14:57:20 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ void	count_grid(t_data *data, char c, t_pixel p)
 		data->player.position = p;
 		data->player.start = p;
 	}
-	else if (data->map.grid[p.px_x][p.px_y] == 'C')
+	else if (data->map.grid[p.px_y][p.px_x] == 'C')
 		data->collectible++;
-	else if (data->map.grid[p.px_x][p.px_y] == 'E')
+	else if (data->map.grid[p.px_y][p.px_x] == 'E')
 		data->exit_found++;
 }
 
@@ -57,10 +57,10 @@ int	input_handler(int keycode, t_data *data)
 		exit_game(data);
 	else if (keycode == UP && !data->won)
 		update_player_pos(data, (t_pixel){data->player.position.px_x, \
-											data->player.position.px_y + 1});
+											data->player.position.px_y - 1});
 	else if (keycode == DOWN && !data->won)
 		update_player_pos(data, (t_pixel){data->player.position.px_x, \
-											data->player.position.px_y - 1});
+											data->player.position.px_y + 1});
 	else if (keycode == RIGHT && !data->won)
 		update_player_pos(data, (t_pixel){data->player.position.px_x + 1, \
 											data->player.position.px_y});

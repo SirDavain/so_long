@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 14:39:52 by dulrich           #+#    #+#             */
-/*   Updated: 2024/02/05 14:10:45 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/02/09 12:13:15 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 int	found_unknown_char(char c)
 {
 	if (c == '0' || c == '1' || c == 'C' || c == 'P' || c == 'E')
-		return (1);
-	return (0);
+		return (0);
+	return (1);
 }
 
 void	map_error(char *str)
@@ -35,18 +35,18 @@ int	missing_walls(t_data *data)
 	y = 0;
 	while (x < data->map.map_w)
 	{
-		if (data->map.grid[x][y] != '1')
+		if (data->map.grid[y][x] != '1')
 			return (1);
-		else if (data->map.grid[x][data->map.map_h - 1] != '1')
+		else if (data->map.grid[data->map.map_h - 1][x] != '1')
 			return (1);
 		x++;
 	}
 	x = 0;
 	while (y < data->map.map_h)
 	{
-		if (data->map.grid[x][y] != '1')
+		if (data->map.grid[y][x] != '1')
 			return (1);
-		else if (data->map.grid[data->map.map_w - 1][y] != '1')
+		else if (data->map.grid[y][data->map.map_w - 1] != '1')
 			return (1);
 		y++;
 	}
@@ -60,14 +60,14 @@ void	check_for_valid_path(t_pixel p, t_data *data)
 
 	width = data->map.map_w;
 	height = data->map.map_h;
-	if (data->map.grid[p.px_x][p.px_y] == '1' || \
-		data->map.tiles[p.px_x][p.px_y].v == 1 || \
+	if (data->map.grid[p.px_y][p.px_x] == '1' || \
+		data->map.tiles[p.px_y][p.px_x].v == 1 || \
 		p.px_x > width || p.px_y > height)
 		return ;
-	data->map.tiles[p.px_x][p.px_y].v = 1;
-	if (data->map.grid[p.px_x][p.px_y] == 'E')
+	data->map.tiles[p.px_y][p.px_x].v = 1;
+	if (data->map.grid[p.px_y][p.px_x] == 'E')
 		data->access_to_exit = TRUE;
-	if (data->map.grid[p.px_x][p.px_y] == 'C')
+	if (data->map.grid[p.px_y][p.px_x] == 'C')
 		data->access_to_collectibles++;
 	check_for_valid_path((t_pixel){p.px_x - 1, p.px_y}, data);
 	check_for_valid_path((t_pixel){p.px_x + 1, p.px_y}, data);

@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 14:03:18 by dulrich           #+#    #+#             */
-/*   Updated: 2024/02/08 16:31:08 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/02/09 15:06:45 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	main(int argc, char **argv)
 	mlx_hook(data.win_ptr, 2, 1L << 0, input_handler, &data);
 	mlx_hook(data.win_ptr, 17, 1L << 0, exit_game, &data);
 	mlx_loop_hook(data.mlx_ptr, render_next_frame, &data);
-	return (0);
+	mlx_loop(data.mlx_ptr);
 }
 
 void	init_vars(t_data *data, char *map_path)
