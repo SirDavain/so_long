@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 13:58:18 by dulrich           #+#    #+#             */
-/*   Updated: 2024/02/09 14:57:20 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/02/09 15:37:54 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	free_tiles(t_data *data)
 
 int	input_handler(int keycode, t_data *data)
 {
-	if (keycode == ESC)
+	if (keycode == 53 || keycode == 65307)
 		exit_game(data);
 	else if (keycode == UP && !data->won)
 		update_player_pos(data, (t_pixel){data->player.position.px_x, \

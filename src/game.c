@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 14:03:18 by dulrich           #+#    #+#             */
-/*   Updated: 2024/02/09 15:06:45 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/02/09 15:38:17 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ int	main(int argc, char **argv)
 	grid_fill(&data);
 	free_tiles(&data);
 	data.mlx_ptr = mlx_init();
-	data.win_ptr = mlx_new_window(data.mlx_ptr, data.map.map_h * SIZE, \
-									data.map.map_w * SIZE, "so_long");
+	data.win_ptr = mlx_new_window(data.mlx_ptr, data.map.map_w * SIZE, \
+									data.map.map_h * SIZE, "so_long");
 	data.img = mlx_new_image(data.mlx_ptr, data.map.map_h * SIZE, \
 								data.map.map_w * SIZE);
 	data.address = mlx_get_data_addr(data.img, &data.bits_per_pixel, \
@@ -97,5 +97,7 @@ int	render_next_frame(t_data *data)
 int	exit_game(t_data *data)
 {
 	mlx_destroy_window(data->mlx_ptr, data->win_ptr);
+/* 	free(data->mlx_ptr);
+	free(data->win_ptr); */
 	exit(0);
 }
