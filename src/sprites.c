@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 02:01:40 by dulrich           #+#    #+#             */
-/*   Updated: 2024/02/09 15:27:36 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/02/19 13:09:58 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,15 @@ void	load_sprites(t_data *data)
 	data->clctbl_sprite.img = mlx_xpm_file_to_image(data->mlx_ptr, \
 	"img/clctbl_sprite.xpm", &data->clctbl_sprite.pixel_w, \
 		&data->clctbl_sprite.pixel_h);
-	data->start_sprite.img = mlx_xpm_file_to_image(data->mlx_ptr, \
+	/* data->start_sprite.img = mlx_xpm_file_to_image(data->mlx_ptr, \
 	"img/start_sprite.xpm", &data->start_sprite.pixel_w, \
-		&data->start_sprite.pixel_h);
+		&data->start_sprite.pixel_h); */
 	data->exit_sprite.img = mlx_xpm_file_to_image(data->mlx_ptr, \
 	"img/exit_sprite.xpm", &data->exit_sprite.pixel_w, \
 		&data->exit_sprite.pixel_h);
-	/* data->win_sprite.img = mlx_xpm_file_to_image(data->mlx_ptr, \
+	data->win_sprite.img = mlx_xpm_file_to_image(data->mlx_ptr, \
 	"img/win_sprite.xpm", &data->win_sprite.pixel_w, \
-		&data->win_sprite.pixel_h); */
+		&data->win_sprite.pixel_h);
 }
 
 void	put_sprite(t_data *data, t_pixel a, char b)
@@ -51,9 +51,9 @@ void	put_sprite(t_data *data, t_pixel a, char b)
 	else if (b == 'C')
 		mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, \
 			data->clctbl_sprite.img, a.px_x, a.px_y);
-	else if (b == 'P')
+/* 	else if (b == 'P')
 		mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, \
-			data->start_sprite.img, a.px_x, a.px_y);
+			data->start_sprite.img, a.px_x, a.px_y); */
 	else if (b == 'E')
 		mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, \
 			data->exit_sprite.img, a.px_x, a.px_y);
@@ -89,16 +89,17 @@ void	render_map(t_data *data)
 	a.px_y = 0;
 	while (a.px_y < data->map.map_h * SIZE)
 	{
-		while (a.px_x < data->map.map_h * SIZE)
+		while (a.px_x < data->map.map_w * SIZE)
 		{
 			if (data->map.grid[a.px_y / SIZE][a.px_x / SIZE] == '1')
 				put_sprite(data, a, '1');
-			else if (data->map.grid[a.px_y / SIZE][a.px_x / SIZE] == '0')
+			else if (data->map.grid[a.px_y / SIZE][a.px_x / SIZE] == '0' || 
+						data->map.grid[a.px_y / SIZE][a.px_x / SIZE] == 'P')
 				put_sprite(data, a, '0');
 			else if (data->map.grid[a.px_y / SIZE][a.px_x / SIZE] == 'C')
 				put_sprite(data, a, 'C');
-			else if (data->map.grid[a.px_y / SIZE][a.px_x / SIZE] == 'P')
-				put_sprite(data, a, 'P');
+			/* else if (data->map.grid[a.px_y / SIZE][a.px_x / SIZE] == 'P')
+				put_sprite(data, a, 'P'); */
 			else if (data->map.grid[a.px_y / SIZE][a.px_x / SIZE] == 'E')
 				put_sprite(data, a, 'E');
 			a.px_x += SIZE;

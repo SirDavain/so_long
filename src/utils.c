@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 13:58:18 by dulrich           #+#    #+#             */
-/*   Updated: 2024/02/09 15:37:54 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/02/19 13:01:36 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,22 +73,24 @@ int	input_handler(int keycode, t_data *data)
 void	update_player_pos(t_data *data, t_pixel new_pos)
 {
 	ft_printf("Total moves: %d\n", ++data->moves);
+	ft_printf("Collectibles obtained: %d\n", data->collected);
 	if (new_pos.px_x < data->map.map_w && new_pos.px_y < data->map.map_h)
 	{
-		if (data->map.grid[new_pos.px_x][new_pos.px_y] == 'C')
+		if (data->map.grid[new_pos.px_y][new_pos.px_x] == 'C')
 		{
 			data->collected++;
 			data->player.position = new_pos;
+			data->map.grid[new_pos.px_y][new_pos.px_x] = '0';
 			if (data->collected == data->collectible)
 				data->exit_unlocked = 1;
 		}
-		else if (data->map.grid[new_pos.px_x][new_pos.px_y] == 'E' \
+		else if (data->map.grid[new_pos.px_y][new_pos.px_x] == 'E' \
 												&& data->exit_unlocked)
 		{
 			data->player.position = new_pos;
 			data->won = TRUE;
 		}
-		else if (data->map.grid[new_pos.px_x][new_pos.px_y] != '1')
+		else if (data->map.grid[new_pos.px_y][new_pos.px_x] != '1')
 			data->player.position = new_pos;
 	}
 }
