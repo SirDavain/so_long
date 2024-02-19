@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 14:03:18 by dulrich           #+#    #+#             */
-/*   Updated: 2024/02/19 12:49:04 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/02/19 16:41:51 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	parse_map(t_map *map)
 
 int	render_next_frame(t_data *data)
 {
-	render_background(data);
+	//render_background(data);
 	if (!data->won)
 	{
 		render_map(data);
@@ -96,8 +96,17 @@ int	render_next_frame(t_data *data)
 
 int	exit_game(t_data *data)
 {
+	size_t	i;
+
+	i = 0;
 	mlx_destroy_window(data->mlx_ptr, data->win_ptr);
-/* 	free(data->mlx_ptr);
-	free(data->win_ptr); */
+	while (i < data->map.map_h)
+	{
+		free(data->map.grid[i]);
+		data->map.grid[i] = NULL;
+		i++;
+	}
+	free(data->map.grid);
+	data->map.grid = NULL;
 	exit(0);
 }

@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 14:03:54 by dulrich           #+#    #+#             */
-/*   Updated: 2024/02/19 12:48:17 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/02/19 15:54:58 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@
 # ifndef SIZE
 #  define SIZE 50
 # endif
-# define ESC 27
 # define UP 119
 # define DOWN 115
 # define LEFT 97
@@ -45,13 +44,6 @@ typedef struct s_sprite
 	int		pixel_h;
 	void	*img;
 }				t_sprite;
-
-/* typedef struct s_img
-{
-	void	*dolphin;
-	void	*background;
-	void	*fish;
-}				t_img; */
 
 typedef struct s_tile
 {

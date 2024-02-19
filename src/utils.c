@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 13:58:18 by dulrich           #+#    #+#             */
-/*   Updated: 2024/02/19 13:01:36 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/02/19 16:20:13 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	allocate_lines(t_data *data, t_pixel grid_pos)
 {
-	data->map.grid[grid_pos.px_y] = malloc((data->map.map_w - 1) * \
+	data->map.grid[grid_pos.px_y] = malloc((data->map.map_w) * \
 														sizeof(char));
-	data->map.tiles[grid_pos.px_y] = malloc((data->map.map_w - 1) * \
+	data->map.tiles[grid_pos.px_y] = malloc((data->map.map_w) * \
 														sizeof(t_tile));
 	if (!(data->map.tiles[grid_pos.px_y]) || !(data->map.grid[grid_pos.px_y]))
 		map_error("Error when allocating space.");
@@ -73,7 +73,6 @@ int	input_handler(int keycode, t_data *data)
 void	update_player_pos(t_data *data, t_pixel new_pos)
 {
 	ft_printf("Total moves: %d\n", ++data->moves);
-	ft_printf("Collectibles obtained: %d\n", data->collected);
 	if (new_pos.px_x < data->map.map_w && new_pos.px_y < data->map.map_h)
 	{
 		if (data->map.grid[new_pos.px_y][new_pos.px_x] == 'C')
