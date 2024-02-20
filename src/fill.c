@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 15:07:19 by dulrich           #+#    #+#             */
-/*   Updated: 2024/02/19 16:33:54 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/02/20 15:02:17 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	start_map_filling(t_data *data, t_pixel *p)
 	data->map.fd = open(data->map.path, O_RDONLY);
 	data->map.grid = malloc(data->map.map_h * sizeof(char *));
 	data->map.tiles = malloc(data->map.map_h * sizeof(t_tile *));
+	if (!data->map.grid || !data->map.tiles)
+		map_error("Issue while malloc'ing");
 	p->px_x = 0;
 	p->px_y = 0;
 }
@@ -49,6 +51,7 @@ int	grid_fill(t_data *data)
 		}
 		grid_pos.px_x = 0;
 		grid_pos.px_y++;
+		free(line);
 		line = get_next_line(data->map.fd);
 	}
 	close(data->map.fd);
@@ -78,6 +81,7 @@ void	print_map(t_data *data)
 	while (line)
 	{
 		printf("%s", line);
+		free(line);
 		line = get_next_line(data->map.fd);
 	}
 	close(data->map.fd);

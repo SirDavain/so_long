@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 14:03:18 by dulrich           #+#    #+#             */
-/*   Updated: 2024/02/19 16:41:51 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/02/20 15:25:38 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	main(int argc, char **argv)
 	parse_map(&data.map);
 	print_map(&data);
 	grid_fill(&data);
-	free_tiles(&data);
+	ft_free(&data, 't');
 	data.mlx_ptr = mlx_init();
 	data.win_ptr = mlx_new_window(data.mlx_ptr, data.map.map_w * SIZE, \
 									data.map.map_h * SIZE, "so_long");
@@ -70,6 +70,7 @@ int	parse_map(t_map *map)
 			map->map_w = get_line_len(line);
 		if (get_line_len(line) != map->map_w)
 			map_error("The map is not rectangular.");
+		free(line);
 		line = get_next_line(map->fd);
 	}
 	close(map->fd);
@@ -80,7 +81,7 @@ int	parse_map(t_map *map)
 
 int	render_next_frame(t_data *data)
 {
-	//render_background(data);
+	render_background(data);
 	if (!data->won)
 	{
 		render_map(data);
@@ -96,17 +97,16 @@ int	render_next_frame(t_data *data)
 
 int	exit_game(t_data *data)
 {
-	size_t	i;
-
-	i = 0;
+	ft_free(data, 'g');
+	mlx_destroy_image(data->mlx_ptr, data->win_sprite.img);
+	mlx_destroy_image(data->mlx_ptr, data->bgr_sprite.img);
+	mlx_destroy_image(data->mlx_ptr, data->floor_sprite.img);
+	mlx_destroy_image(data->mlx_ptr, data->p_sprite.img);
+	mlx_destroy_image(data->mlx_ptr, data->wall_sprite.img);
+	mlx_destroy_image(data->mlx_ptr, data->exit_sprite.img);
+	mlx_destroy_image(data->mlx_ptr, data->clctbl_sprite.img);
 	mlx_destroy_window(data->mlx_ptr, data->win_ptr);
-	while (i < data->map.map_h)
-	{
-		free(data->map.grid[i]);
-		data->map.grid[i] = NULL;
-		i++;
-	}
-	free(data->map.grid);
-	data->map.grid = NULL;
+	free(data->mlx_ptr);
+	// seems to cause memory loss!! -> free(data->img);
 	exit(0);
 }

@@ -6,21 +6,11 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 08:32:59 by dulrich           #+#    #+#             */
-/*   Updated: 2024/02/03 15:19:32 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/02/20 13:45:36 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
-/* size_t	ft_strlen(const char *s)
-{
-	int	i;
-
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
-} */
 
 char	*ft_new_strjoin(char *s1, char const *s2)
 {
@@ -30,7 +20,7 @@ char	*ft_new_strjoin(char *s1, char const *s2)
 
 	if (!s1)
 	{
-		s1 = malloc(sizeof(char) * 1);
+		s1 = malloc(sizeof(char));
 		if (!s1)
 			return (free(s1), NULL);
 		s1[0] = '\0';
@@ -39,13 +29,13 @@ char	*ft_new_strjoin(char *s1, char const *s2)
 	if (!str)
 		return (free(s1), NULL);
 	i = 0;
-	while (s1[i] != '\0')
+	while (s1[i])
 	{
 		str[i] = s1[i];
 		i++;
 	}
 	j = 0;
-	while (s2[j] != '\0')
+	while (s2[j])
 		str[i++] = s2[j++];
 	str[i] = '\0';
 	return (free(s1), str);

@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 14:03:54 by dulrich           #+#    #+#             */
-/*   Updated: 2024/02/19 15:54:58 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/02/20 12:06:19 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ typedef struct s_data
 
 void	allocate_lines(t_data *data, t_pixel grid_pos);
 void	count_grid(t_data *data, char c, t_pixel p);
-void	free_tiles(t_data *data);
+void	ft_free(t_data *data, char a);
 int		input_handler(int keycode, t_data *data);
 void	update_player_pos(t_data *data, t_pixel new_pos);
 

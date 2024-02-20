@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 08:33:17 by dulrich           #+#    #+#             */
-/*   Updated: 2024/02/05 15:23:12 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/02/20 14:28:23 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ int	main(void)
 	int lines = 1;
 	char *print_line;
 	//int fd = 0; 
-	int fd = open("lorem.txt", O_RDONLY);
+	int fd = open("../testing/lorem.txt", O_RDONLY);
 	while ((print_line = get_next_line(fd)))
 	{
 		printf("%d->%s", lines++, print_line);

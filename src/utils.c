@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 13:58:18 by dulrich           #+#    #+#             */
-/*   Updated: 2024/02/19 16:20:13 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/02/20 12:06:57 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,19 +36,33 @@ void	count_grid(t_data *data, char c, t_pixel p)
 		data->exit_found++;
 }
 
-void	free_tiles(t_data *data)
+void	ft_free(t_data *data, char a)
 {
 	size_t	i;
 
 	i = 0;
-	while (i < data->map.map_h)
+	if (a == 't')
 	{
-		free(data->map.tiles[i]);
-		data->map.tiles[i] = NULL;
-		i++;
+		while (i < data->map.map_h)
+		{
+			free(data->map.tiles[i]);
+			data->map.tiles[i] = NULL;
+			i++;
+		}
+		free(data->map.tiles);
+		data->map.tiles = NULL;
 	}
-	free(data->map.tiles);
-	data->map.tiles = NULL;
+	else if (a == 'g')
+	{
+		while (i < data->map.map_h)
+		{
+			free(data->map.grid[i]);
+			data->map.grid[i] = NULL;
+			i++;
+		}
+		free(data->map.grid);
+		data->map.grid = NULL;
+	}
 }
 
 int	input_handler(int keycode, t_data *data)
