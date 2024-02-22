@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 14:03:54 by dulrich           #+#    #+#             */
-/*   Updated: 2024/02/20 12:06:19 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/02/22 17:26:32 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ typedef struct s_map
 	int		fd;
 	int		x;
 	int		y;
-	int		fish;
 }				t_map;
 
 typedef struct s_data
@@ -104,7 +103,7 @@ typedef struct s_data
 
 // utils.c
 
-void	allocate_lines(t_data *data, t_pixel grid_pos);
+void	allocate_line(t_data *data, t_pixel grid_pos);
 void	count_grid(t_data *data, char c, t_pixel p);
 void	ft_free(t_data *data, char a);
 int		input_handler(int keycode, t_data *data);
@@ -114,7 +113,7 @@ void	update_player_pos(t_data *data, t_pixel new_pos);
 
 int		main(int argc, char **argv);
 void	init_vars(t_data *data, char *map_path);
-int		parse_map(t_map *map);
+int		parse_map(t_data *data);
 int		render_next_frame(t_data *data);
 int		exit_game(t_data *data);
 
@@ -129,7 +128,7 @@ void	render_player(t_data *data);
 // checker.c
 
 int		found_unknown_char(char c);
-void	map_error(char *str);
+void	map_error(char *str, t_data *data, int flag);
 int		missing_walls(t_data *data);
 void	check_for_valid_path(t_pixel p, t_data *data);
 void	map_checker(t_data *data);
@@ -137,7 +136,7 @@ void	map_checker(t_data *data);
 // fill.c
 
 void	start_map_filling(t_data *data, t_pixel *p);
-void	fill_tiles(t_data *data, char *line, t_pixel grid_pos);
+int		fill_tiles(t_data *data, char *line, t_pixel grid_pos);
 int		grid_fill(t_data *data);
 size_t	get_line_len(char *str);
 void	print_map(t_data *data);

@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 14:39:52 by dulrich           #+#    #+#             */
-/*   Updated: 2024/02/09 12:13:15 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/02/22 17:28:30 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,17 @@ int	found_unknown_char(char c)
 	return (1);
 }
 
-void	map_error(char *str)
+void	map_error(char *str, t_data *data, int flag)
 {
 	ft_printf("Error\n");
 	ft_printf("%s\n", str);
+	if (flag)
+	{
+		if (data->map.grid != NULL)
+			ft_free(data, 'g');
+		if (data->map.tiles != NULL)
+			ft_free(data, 't');
+	}
 	exit(1);
 }
 
@@ -79,17 +86,17 @@ void	check_for_valid_path(t_pixel p, t_data *data)
 void	map_checker(t_data *data)
 {
 	if (data->exit_found <= 0)
-		map_error("The map is missing an exit");
+		map_error("The map is missing an exit", data, 1);
 	if (data->exit_found > 1)
-		map_error("Too many exits found on the map.");
+		map_error("Too many exits found on the map.", data, 1);
 	if (!data->access_to_exit)
-		map_error("There is no valid path to the exit.");
+		map_error("There is no valid path to the exit.", data, 1);
 	if (data->start_found <= 0)
-		map_error("There is no starting point on the map.");
+		map_error("There is no starting point on the map.", data, 1);
 	if (data->start_found > 1)
-		map_error("Too many starting points found on the map.");
+		map_error("Too many starting points found on the map.", data, 1);
 	if (data->collectible < 1)
-		map_error("There are too few collectibles.");
+		map_error("There are too few collectibles.", data, 1);
 	if (data->collectible != data->access_to_collectibles)
-		map_error("Not all collectibles can be accessed.");
+		map_error("Not all collectibles can be accessed.", data, 1);
 }

@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 14:03:18 by dulrich           #+#    #+#             */
-/*   Updated: 2024/02/20 15:25:38 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/02/22 17:21:39 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@ int	main(int argc, char **argv)
 	t_data	data;
 
 	if (argc != 2)
-		map_error("Wrong number of arguments.");
+		map_error("Wrong number of arguments.", &data, 0);
 	if (!ft_strnstr(argv[1], ".ber", ft_strlen(argv[1])))
-		map_error("Map has to be in format .ber.");
+		map_error("Map has to be in format .ber.", &data, 0);
 	init_vars(&data, argv[1]);
-	parse_map(&data.map);
+	parse_map(&data);
 	print_map(&data);
 	grid_fill(&data);
 	ft_free(&data, 't');
@@ -30,8 +30,8 @@ int	main(int argc, char **argv)
 									data.map.map_h * SIZE, "so_long");
 	data.img = mlx_new_image(data.mlx_ptr, data.map.map_h * SIZE, \
 								data.map.map_w * SIZE);
-	data.address = mlx_get_data_addr(data.img, &data.bits_per_pixel, \
-										&data.size_line, &data.endian);
+	/* data.address = mlx_get_data_addr(data.img, &data.bits_per_pixel, \
+										&data.size_line, &data.endian); */
 	load_sprites(&data);
 	mlx_hook(data.win_ptr, 2, 1L << 0, input_handler, &data);
 	mlx_hook(data.win_ptr, 17, 1L << 0, exit_game, &data);
@@ -42,6 +42,8 @@ int	main(int argc, char **argv)
 void	init_vars(t_data *data, char *map_path)
 {
 	data->map.path = map_path;
+	data->map.map_h = 0;
+	data->map.map_w = 0;
 	data->exit_unlocked = FALSE;
 	data->access_to_exit = FALSE;
 	data->access_to_collectibles = 0;
@@ -53,29 +55,32 @@ void	init_vars(t_data *data, char *map_path)
 	data->start_found = 0;
 }
 
-int	parse_map(t_map *map)
+int	parse_map(t_data *data)
 {
 	char	*line;
+	int		not_rectangular;
 
-	map->fd = open(map->path, O_RDONLY);
-	if (map->fd < 0)
-		map_error("Map was not found.");
-	map->map_h = 0;
-	map->map_w = 0;
-	line = get_next_line(map->fd);
+	not_rectangular = 0;
+	data->map.fd = open(data->map.path, O_RDONLY);
+	if (data->map.fd < 0)
+		map_error("Map was not found.", data, 0);
+	line = get_next_line(data->map.fd);
 	while (line)
 	{
-		map->map_h++;
-		if (map->map_h == 1)
-			map->map_w = get_line_len(line);
-		if (get_line_len(line) != map->map_w)
-			map_error("The map is not rectangular.");
+		data->map.map_h++;
+		if (data->map.map_h == 1)
+			data->map.map_w = get_line_len(line);
+		if (get_line_len(line) != data->map.map_w)
+			not_rectangular = 1;
 		free(line);
-		line = get_next_line(map->fd);
+		line = get_next_line(data->map.fd);
 	}
-	close(map->fd);
-	if (map->map_h == 0)
-		map_error("Map is empty.");
+	free(line);
+	close(data->map.fd);
+	if (not_rectangular)
+		map_error("The map is not rectangular.", data, 0);
+	if (data->map.map_h == 0)
+		map_error("Map is empty.", data, 0);
 	return (0);
 }
 
@@ -98,6 +103,7 @@ int	render_next_frame(t_data *data)
 int	exit_game(t_data *data)
 {
 	ft_free(data, 'g');
+	mlx_clear_window(data->mlx_ptr, data->win_ptr);
 	mlx_destroy_image(data->mlx_ptr, data->win_sprite.img);
 	mlx_destroy_image(data->mlx_ptr, data->bgr_sprite.img);
 	mlx_destroy_image(data->mlx_ptr, data->floor_sprite.img);
@@ -106,7 +112,7 @@ int	exit_game(t_data *data)
 	mlx_destroy_image(data->mlx_ptr, data->exit_sprite.img);
 	mlx_destroy_image(data->mlx_ptr, data->clctbl_sprite.img);
 	mlx_destroy_window(data->mlx_ptr, data->win_ptr);
+	mlx_destroy_display(data->mlx_ptr);
 	free(data->mlx_ptr);
-	// seems to cause memory loss!! -> free(data->img);
 	exit(0);
 }

@@ -6,20 +6,20 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 13:58:18 by dulrich           #+#    #+#             */
-/*   Updated: 2024/02/20 12:06:57 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/02/22 15:46:01 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	allocate_lines(t_data *data, t_pixel grid_pos)
+void	allocate_line(t_data *data, t_pixel grid_pos)
 {
 	data->map.grid[grid_pos.px_y] = malloc((data->map.map_w) * \
 														sizeof(char));
 	data->map.tiles[grid_pos.px_y] = malloc((data->map.map_w) * \
 														sizeof(t_tile));
 	if (!(data->map.tiles[grid_pos.px_y]) || !(data->map.grid[grid_pos.px_y]))
-		map_error("Error when allocating space.");
+		map_error("Error when allocating space.", data, 0);
 }
 
 void	count_grid(t_data *data, char c, t_pixel p)
