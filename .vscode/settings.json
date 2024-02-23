@@ -1,0 +1,7 @@
+{
+	"files.associations": {
+		"libft.h": "c",
+		"errno.h": "c",
+		"aio.h": "c"
+	}
+}

@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 14:39:52 by dulrich           #+#    #+#             */
-/*   Updated: 2024/02/22 17:28:30 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/02/23 11:14:47 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,6 @@ void	map_checker(t_data *data)
 		map_error("Too many exits found on the map.", data, 1);
 	if (!data->access_to_exit)
 		map_error("There is no valid path to the exit.", data, 1);
-	if (data->start_found <= 0)
-		map_error("There is no starting point on the map.", data, 1);
 	if (data->start_found > 1)
 		map_error("Too many starting points found on the map.", data, 1);
 	if (data->collectible < 1)

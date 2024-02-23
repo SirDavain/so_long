@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 02:01:40 by dulrich           #+#    #+#             */
-/*   Updated: 2024/02/20 15:23:05 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/02/23 15:58:35 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,9 @@ void	load_sprites(t_data *data)
 	data->win_sprite.img = mlx_xpm_file_to_image(data->mlx_ptr, \
 	"img/win_sprite.xpm", &data->win_sprite.pixel_w, \
 		&data->win_sprite.pixel_h);
+	/* if (img_not_found)
+		free_img();
+		map_error("Image was not found", data, 1); */
 }
 
 void	put_sprite(t_data *data, t_pixel a, char b)
@@ -46,8 +49,12 @@ void	put_sprite(t_data *data, t_pixel a, char b)
 		mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, \
 			data->floor_sprite.img, a.px_x, a.px_y);
 	else if (b == 'C')
+	{
+		mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, \
+			data->floor_sprite.img, a.px_x, a.px_y);
 		mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, \
 			data->clctbl_sprite.img, a.px_x, a.px_y);
+	}	
 	else if (b == 'E')
 		mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, \
 			data->exit_sprite.img, a.px_x, a.px_y);

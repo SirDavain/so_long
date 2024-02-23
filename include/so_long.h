@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 14:03:54 by dulrich           #+#    #+#             */
-/*   Updated: 2024/02/22 17:26:32 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/02/23 15:56:40 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # define FALSE 0
 # define TRUE 1
 # ifndef SIZE
-#  define SIZE 50
+#  define SIZE 48
 # endif
 # define UP 119
 # define DOWN 115

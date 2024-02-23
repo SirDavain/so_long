@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 15:07:19 by dulrich           #+#    #+#             */
-/*   Updated: 2024/02/22 17:34:02 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/02/23 11:14:38 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	grid_fill(t_data *data)
 		map_error("There is an unknown character inside the map.", data, 1);
 	if (missing_walls(data))
 		map_error("There is an issue with the walls of the map.", data, 1);
-	if (!data->player.position.px_x || !data->player.position.px_y)
+	if (data->start_found <= 0)
 		map_error("There is no starting point on the map.", data, 1);
 	check_for_valid_path(data->player.position, data);
 	map_checker(data);

@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 14:03:18 by dulrich           #+#    #+#             */
-/*   Updated: 2024/02/22 17:21:39 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/02/23 15:58:17 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,6 @@ int	render_next_frame(t_data *data)
 int	exit_game(t_data *data)
 {
 	ft_free(data, 'g');
-	mlx_clear_window(data->mlx_ptr, data->win_ptr);
 	mlx_destroy_image(data->mlx_ptr, data->win_sprite.img);
 	mlx_destroy_image(data->mlx_ptr, data->bgr_sprite.img);
 	mlx_destroy_image(data->mlx_ptr, data->floor_sprite.img);
@@ -111,6 +110,7 @@ int	exit_game(t_data *data)
 	mlx_destroy_image(data->mlx_ptr, data->wall_sprite.img);
 	mlx_destroy_image(data->mlx_ptr, data->exit_sprite.img);
 	mlx_destroy_image(data->mlx_ptr, data->clctbl_sprite.img);
+	mlx_destroy_image(data->mlx_ptr, data->img);
 	mlx_destroy_window(data->mlx_ptr, data->win_ptr);
 	mlx_destroy_display(data->mlx_ptr);
 	free(data->mlx_ptr);
