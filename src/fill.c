@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 15:07:19 by dulrich           #+#    #+#             */
-/*   Updated: 2024/02/23 11:14:38 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/02/24 14:06:10 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ size_t	get_line_len(char *str)
 	return (i);
 }
 
-void	print_map(t_data *data)
+/* void	print_map(t_data *data)
 {
 	char	*line;
 
@@ -97,4 +97,4 @@ void	print_map(t_data *data)
 		line = get_next_line(data->map.fd);
 	}
 	close(data->map.fd);
-}
+} */

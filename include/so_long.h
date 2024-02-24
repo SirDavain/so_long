@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 14:03:54 by dulrich           #+#    #+#             */
-/*   Updated: 2024/02/23 15:56:40 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/02/24 16:54:59 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,8 @@ int		exit_game(t_data *data);
 
 // sprites.c
 
-void	load_sprites(t_data *data);
+void	init_sprites(t_data *data);
+void	*ft_load_sprite(t_data *data, char *str, int *px_w, int *px_h);
 void	put_sprite(t_data *data, t_pixel a, char b);
 void	render_background(t_data *data);
 void	render_map(t_data *data);

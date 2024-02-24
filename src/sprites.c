@@ -6,38 +6,59 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 02:01:40 by dulrich           #+#    #+#             */
-/*   Updated: 2024/02/23 15:58:35 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/02/24 16:58:09 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	load_sprites(t_data *data)
+void	init_sprites(t_data *data)
 {
-	data->bgr_sprite.img = mlx_xpm_file_to_image(data->mlx_ptr, \
-	"img/bgr_sprite.xpm", &data->bgr_sprite.pixel_w, \
-		&data->bgr_sprite.pixel_h);
-	data->p_sprite.img = mlx_xpm_file_to_image(data->mlx_ptr, \
-	"img/p_sprite.xpm", &data->p_sprite.pixel_w, \
-		&data->p_sprite.pixel_h);
-	data->wall_sprite.img = mlx_xpm_file_to_image(data->mlx_ptr, \
-	"img/wall_sprite.xpm", &data->wall_sprite.pixel_w, \
-		&data->wall_sprite.pixel_h);
-	data->floor_sprite.img = mlx_xpm_file_to_image(data->mlx_ptr, \
-	"img/floor_sprite.xpm", &data->floor_sprite.pixel_w, \
-		&data->floor_sprite.pixel_h);
-	data->clctbl_sprite.img = mlx_xpm_file_to_image(data->mlx_ptr, \
-	"img/clctbl_sprite.xpm", &data->clctbl_sprite.pixel_w, \
-		&data->clctbl_sprite.pixel_h);
-	data->exit_sprite.img = mlx_xpm_file_to_image(data->mlx_ptr, \
-	"img/exit_sprite.xpm", &data->exit_sprite.pixel_w, \
-		&data->exit_sprite.pixel_h);
-	data->win_sprite.img = mlx_xpm_file_to_image(data->mlx_ptr, \
-	"img/win_sprite.xpm", &data->win_sprite.pixel_w, \
-		&data->win_sprite.pixel_h);
-	/* if (img_not_found)
-		free_img();
-		map_error("Image was not found", data, 1); */
+	data->bgr_sprite.img = ft_load_sprite(data, "img/bgr_sprite.xpm", \
+		&data->bgr_sprite.pixel_w, &data->bgr_sprite.pixel_h);
+	data->floor_sprite.img = ft_load_sprite(data, "img/floor_sprite.xpm", \
+		&data->floor_sprite.pixel_w, &data->floor_sprite.pixel_h);
+	data->wall_sprite.img = ft_load_sprite(data, "img/wall_sprite.xpm", \
+		&data->wall_sprite.pixel_w, &data->wall_sprite.pixel_h);
+	data->p_sprite.img = ft_load_sprite(data,"img/p_sprite.xpm", \
+		&data->p_sprite.pixel_w, &data->p_sprite.pixel_h);	
+	data->clctbl_sprite.img = ft_load_sprite(data, "img/clctbl_sprite.xpm", \
+		&data->clctbl_sprite.pixel_w, &data->clctbl_sprite.pixel_h);
+	data->exit_sprite.img = ft_load_sprite(data, "img/exit_sprite.xpm", \
+		&data->exit_sprite.pixel_w, &data->exit_sprite.pixel_h);
+	data->win_sprite.img = ft_load_sprite(data, "img/win_sprite.xpm", \
+		&data->win_sprite.pixel_w, &data->win_sprite.pixel_h);
+}
+
+void	*ft_load_sprite(t_data *data, char *str, int *px_w, int *px_h)
+{
+	static int	i = 0;
+	int			j;
+	t_data 		*sprite;
+
+	/* char	sprite_arr[7][30] = {"img/bgr_sprite.xpm", "img/floor_sprite.xpm", \ 
+	"img/wall_sprite.xpm", "img/p_sprite.xpm", "img/clctbl_sprite.xpm", \
+	"img/exit_sprite.xpm", "img/win_sprite.xpm"}; */
+	
+	int	sprite_loc[7][30] = {data->bgr_sprite.img, data->floor_sprite.img, \
+	data->wall_sprite.img, data->p_sprite.img, data->clctbl_sprite.img, \
+	data->exit_sprite.img, data->win_sprite.img};
+	sprite = mlx_xpm_file_to_image(data->mlx_ptr, str, px_w, px_h);
+	if (!sprite)
+	{
+		j = 0;
+		while (i >= j)
+		{
+			mlx_destroy_image(data->mlx_ptr, sprite_loc[j]);
+			j++;
+		}
+		mlx_destroy_image(data->mlx_ptr, data->img);
+		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
+		mlx_destroy_display(data->mlx_ptr);
+		free(data->mlx_ptr);
+		map_error("Image not found.", data, 1);
+	}
+	return (sprite);
 }
 
 void	put_sprite(t_data *data, t_pixel a, char b)
