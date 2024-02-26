@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 13:58:18 by dulrich           #+#    #+#             */
-/*   Updated: 2024/02/26 14:14:27 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/02/26 16:47:34 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,10 @@ int	input_handler(int keycode, t_data *data)
 
 void	update_player_pos(t_data *data, t_pixel new_pos)
 {
-	ft_printf("Total moves: %d\n", ++data->moves);
 	if (new_pos.px_x < data->map.map_w && new_pos.px_y < data->map.map_h)
 	{
+		ft_printf("Total moves: %d\n", ++data->moves);
+		render_map(data);
 		if (data->map.grid[new_pos.px_y][new_pos.px_x] == 'C')
 		{
 			data->collected++;
@@ -102,6 +103,7 @@ void	update_player_pos(t_data *data, t_pixel new_pos)
 		{
 			data->player.position = new_pos;
 			data->won = TRUE;
+			render_next_frame(data);
 		}
 		else if (data->map.grid[new_pos.px_y][new_pos.px_x] != '1')
 			data->player.position = new_pos;

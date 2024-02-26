@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 02:01:40 by dulrich           #+#    #+#             */
-/*   Updated: 2024/02/26 14:16:11 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/02/26 16:48:45 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	init_sprites(t_data *data)
 	data->wall_sprite.img = ft_load_sprite(data, "img/wall_sprite.xpm", \
 		&data->wall_sprite.pixel_w, &data->wall_sprite.pixel_h);
 	data->flag.wall_sprite = 1;
-	data->p_sprite.img = ft_load_sprite(data,"img/p_sprite.xpm", \
+	data->p_sprite.img = ft_load_sprite(data, "img/p_sprite.xpm", \
 		&data->p_sprite.pixel_w, &data->p_sprite.pixel_h);
 	data->flag.p_sprite = 1;
 	data->clctbl_sprite.img = ft_load_sprite(data, "img/clctbl_sprite.xpm", \
@@ -86,7 +86,7 @@ void	put_sprite(t_data *data, t_pixel a, char b)
 			data->floor_sprite.img, a.px_x, a.px_y);
 		mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, \
 			data->clctbl_sprite.img, a.px_x, a.px_y);
-	}	
+	}
 	else if (b == 'E')
 		mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, \
 			data->exit_sprite.img, a.px_x, a.px_y);
@@ -120,13 +120,14 @@ void	render_map(t_data *data)
 
 	a.px_x = 0;
 	a.px_y = 0;
+	//mlx_clear_window(data->mlx_ptr, data->win_ptr);
 	while (a.px_y < data->map.map_h * SIZE)
 	{
 		while (a.px_x < data->map.map_w * SIZE)
 		{
 			if (data->map.grid[a.px_y / SIZE][a.px_x / SIZE] == '1')
 				put_sprite(data, a, '1');
-			else if (data->map.grid[a.px_y / SIZE][a.px_x / SIZE] == '0' || 
+			else if (data->map.grid[a.px_y / SIZE][a.px_x / SIZE] == '0' ||
 						data->map.grid[a.px_y / SIZE][a.px_x / SIZE] == 'P')
 				put_sprite(data, a, '0');
 			else if (data->map.grid[a.px_y / SIZE][a.px_x / SIZE] == 'C')
@@ -138,6 +139,7 @@ void	render_map(t_data *data)
 		a.px_x = 0;
 		a.px_y += SIZE;
 	}
+	render_player(data);
 }
 
 void	render_player(t_data *data)

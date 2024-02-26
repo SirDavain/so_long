@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 14:03:18 by dulrich           #+#    #+#             */
-/*   Updated: 2024/02/26 14:24:40 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/02/26 17:03:08 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,11 @@ int	main(int argc, char **argv)
 	init_mlx_win_img(&data);
 	init_flags(&data);
 	init_sprites(&data);
-	mlx_hook(data.win_ptr, 2, 1L << 0, input_handler, &data);
-	mlx_hook(data.win_ptr, 17, 1L << 0, exit_game, &data);
-	mlx_loop_hook(data.mlx_ptr, render_next_frame, &data);
+	render_map(&data);
+	mlx_hook(data.win_ptr, 2, (1L<<0), input_handler, &data);
+	mlx_hook(data.win_ptr, 17, (1L<<0), exit_game, &data);
+	//mlx_loop_hook(data.mlx_ptr, render_next_frame, &data);
+	//mlx_hook(data.win_ptr, 12, 0L, render_next_frame, &data);
 	mlx_loop(data.mlx_ptr);
 }
 
@@ -97,14 +99,14 @@ int	parse_map(t_data *data)
 
 int	render_next_frame(t_data *data)
 {
-	render_background(data);
-	if (!data->won)
+	/* if (!data->won)
 	{
 		render_map(data);
 		render_player(data);
-	}
-	else
+	} */
+	if (data->won)
 	{
+		render_background(data);
 		mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, \
 								data->win_sprite.img, 0, 0);
 	}
