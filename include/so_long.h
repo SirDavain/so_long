@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 14:03:54 by dulrich           #+#    #+#             */
-/*   Updated: 2024/02/24 16:54:59 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/02/26 13:04:41 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <aio.h>
 # include <fcntl.h>
 # include <errno.h>
+# include <stdbool.h>
 # include <mlx.h>
 # include <X11/keysym.h>
 # include "../libft/libft.h"
@@ -44,6 +45,17 @@ typedef struct s_sprite
 	int		pixel_h;
 	void	*img;
 }				t_sprite;
+
+typedef struct s_sprite_flag
+{
+	int	bgr_sprite;
+	int	floor_sprite;
+	int	wall_sprite;
+	int	p_sprite;
+	int	clctbl_sprite;
+	int	exit_sprite;
+	int	win_sprite;
+}				t_sprite_flag;
 
 typedef struct s_tile
 {
@@ -79,12 +91,11 @@ typedef struct s_data
 	int			size_y;
 	t_player	player;
 	t_map		map;
-	t_sprite	p_sprite;
 	t_sprite	bgr_sprite;
-	t_sprite	wall_sprite;
 	t_sprite	floor_sprite;
+	t_sprite	wall_sprite;
+	t_sprite	p_sprite;
 	t_sprite	clctbl_sprite;
-	t_sprite	start_sprite;
 	t_sprite	exit_sprite;
 	t_sprite	win_sprite;
 	int			exit_unlocked;
