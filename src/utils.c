@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 13:58:18 by dulrich           #+#    #+#             */
-/*   Updated: 2024/02/22 15:46:01 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/02/26 14:14:27 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,4 +106,15 @@ void	update_player_pos(t_data *data, t_pixel new_pos)
 		else if (data->map.grid[new_pos.px_y][new_pos.px_x] != '1')
 			data->player.position = new_pos;
 	}
+}
+
+void	init_flags(t_data *data)
+{
+	data->flag.bgr_sprite = 0;
+	data->flag.floor_sprite = 0;
+	data->flag.wall_sprite = 0;
+	data->flag.p_sprite = 0;
+	data->flag.clctbl_sprite = 0;
+	data->flag.exit_sprite = 0;
+	data->flag.win_sprite = 0;
 }

@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 14:39:52 by dulrich           #+#    #+#             */
-/*   Updated: 2024/02/24 16:53:52 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/02/26 13:48:18 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	map_error(char *str, t_data *data, int flag)
 		if (data->map.tiles != NULL)
 			ft_free(data, 't');
 	}
+	exit (1);
 }
 
 int	missing_walls(t_data *data)

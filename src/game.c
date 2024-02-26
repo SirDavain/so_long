@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 14:03:18 by dulrich           #+#    #+#             */
-/*   Updated: 2024/02/26 13:02:00 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/02/26 14:24:40 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	main(int argc, char **argv)
 {
-	t_data	data;
+	t_data			data;
 
 	if (argc != 2)
 		map_error("Wrong number of arguments.", &data, 0);
@@ -24,24 +24,30 @@ int	main(int argc, char **argv)
 	parse_map(&data);
 	grid_fill(&data);
 	ft_free(&data, 't');
-	data.mlx_ptr = mlx_init();
-	/* if (!data.mlx_ptr)
-		error; */
-	data.win_ptr = mlx_new_window(data.mlx_ptr, data.map.map_w * SIZE, \
-									data.map.map_h * SIZE, "so_long");
-	/* if (!data.win_ptr)
-		error ; */
-	data.img = mlx_new_image(data.mlx_ptr, data.map.map_h * SIZE, \
-								data.map.map_w * SIZE);
-	/* data.address = mlx_get_data_addr(data.img, &data.bits_per_pixel, \
-										&data.size_line, &data.endian); */
-	/* if (!data.img)
-		error ; */
+	init_mlx_win_img(&data);
+	init_flags(&data);
 	init_sprites(&data);
 	mlx_hook(data.win_ptr, 2, 1L << 0, input_handler, &data);
 	mlx_hook(data.win_ptr, 17, 1L << 0, exit_game, &data);
 	mlx_loop_hook(data.mlx_ptr, render_next_frame, &data);
 	mlx_loop(data.mlx_ptr);
+}
+
+void	init_mlx_win_img(t_data *data)
+{
+	data->mlx_ptr = mlx_init();
+	if (!data->mlx_ptr)
+		map_error("Failed to initialize the mlx pointer.", data, 1);
+	data->win_ptr = mlx_new_window(data->mlx_ptr, data->map.map_w * SIZE, \
+									data->map.map_h * SIZE, "so_long");
+	if (!data->win_ptr)
+		map_error("Failed to initialize the window pointer.", data, 1);
+	data->img = mlx_new_image(data->mlx_ptr, data->map.map_h * SIZE, \
+								data->map.map_w * SIZE);
+	if (!data->img)
+		map_error("Failed to initialize the img pointer.", data, 1);
+/* 	data.address = mlx_get_data_addr(data.img, &data.bits_per_pixel, \
+										&data.size_line, &data.endian); */
 }
 
 void	init_vars(t_data *data, char *map_path)

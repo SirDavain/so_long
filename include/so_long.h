@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 14:03:54 by dulrich           #+#    #+#             */
-/*   Updated: 2024/02/26 13:04:41 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/02/26 14:25:34 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 # include <aio.h>
 # include <fcntl.h>
 # include <errno.h>
-# include <stdbool.h>
 # include <mlx.h>
 # include <X11/keysym.h>
 # include "../libft/libft.h"
@@ -26,7 +25,7 @@
 # define FALSE 0
 # define TRUE 1
 # ifndef SIZE
-#  define SIZE 48
+#  define SIZE 32
 # endif
 # define UP 119
 # define DOWN 115
@@ -83,34 +82,44 @@ typedef struct s_map
 
 typedef struct s_data
 {
-	void		*win_ptr;
-	void		*mlx_ptr;
-	void		*img;
-	char		*address;
-	int			size_x;
-	int			size_y;
-	t_player	player;
-	t_map		map;
-	t_sprite	bgr_sprite;
-	t_sprite	floor_sprite;
-	t_sprite	wall_sprite;
-	t_sprite	p_sprite;
-	t_sprite	clctbl_sprite;
-	t_sprite	exit_sprite;
-	t_sprite	win_sprite;
-	int			exit_unlocked;
-	int			collectible;
-	int			collected;
-	int			moves;
-	int			start_found;
-	int			exit_found;
-	int			access_to_exit;
-	int			access_to_collectibles;
-	int			endian;
-	int			bits_per_pixel;
-	int			size_line;
-	int			won;
+	void			*win_ptr;
+	void			*mlx_ptr;
+	void			*img;
+	char			*address;
+	int				size_x;
+	int				size_y;
+	t_player		player;
+	t_map			map;
+	t_sprite_flag	flag;
+	t_sprite		bgr_sprite;
+	t_sprite		floor_sprite;
+	t_sprite		wall_sprite;
+	t_sprite		p_sprite;
+	t_sprite		clctbl_sprite;
+	t_sprite		exit_sprite;
+	t_sprite		win_sprite;
+	int				exit_unlocked;
+	int				collectible;
+	int				collected;
+	int				moves;
+	int				start_found;
+	int				exit_found;
+	int				access_to_exit;
+	int				access_to_collectibles;
+	int				endian;
+	int				bits_per_pixel;
+	int				size_line;
+	int				won;
 }				t_data;
+
+// game.c
+
+int		main(int argc, char **argv);
+void	init_vars(t_data *data, char *map_path);
+int		parse_map(t_data *data);
+void	init_mlx_win_img(t_data *data);
+int		render_next_frame(t_data *data);
+int		exit_game(t_data *data);
 
 // utils.c
 
@@ -119,20 +128,14 @@ void	count_grid(t_data *data, char c, t_pixel p);
 void	ft_free(t_data *data, char a);
 int		input_handler(int keycode, t_data *data);
 void	update_player_pos(t_data *data, t_pixel new_pos);
-
-// game.c
-
-int		main(int argc, char **argv);
-void	init_vars(t_data *data, char *map_path);
-int		parse_map(t_data *data);
-int		render_next_frame(t_data *data);
-int		exit_game(t_data *data);
+void	init_flags(t_data *data);
 
 // sprites.c
 
 void	init_sprites(t_data *data);
 void	*ft_load_sprite(t_data *data, char *str, int *px_w, int *px_h);
 void	put_sprite(t_data *data, t_pixel a, char b);
+void	free_sprites(t_data *data);
 void	render_background(t_data *data);
 void	render_map(t_data *data);
 void	render_player(t_data *data);
