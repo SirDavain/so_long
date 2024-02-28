@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 14:03:54 by dulrich           #+#    #+#             */
-/*   Updated: 2024/02/26 15:16:50 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/02/28 16:32:49 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,11 +115,10 @@ typedef struct s_data
 // game.c
 
 int		main(int argc, char **argv);
-void	init_vars(t_data *data, char *map_path);
 int		parse_map(t_data *data);
 void	init_mlx_win_img(t_data *data);
-int		render_next_frame(t_data *data);
 int		exit_game(t_data *data);
+int		ft_format(char *str, t_data *data);
 
 // utils.c
 
@@ -128,6 +127,12 @@ void	count_grid(t_data *data, char c, t_pixel p);
 void	ft_free(t_data *data, char a);
 int		input_handler(int keycode, t_data *data);
 void	update_player_pos(t_data *data, t_pixel new_pos);
+
+// utils2.c
+
+size_t	get_line_len(char *str);
+void	put_win_screen(t_data *data);
+void	init_vars(t_data *data, char *map_path);
 void	init_flags(t_data *data);
 
 // sprites.c
@@ -136,6 +141,9 @@ void	init_sprites(t_data *data);
 void	*ft_load_sprite(t_data *data, char *str, int *px_w, int *px_h);
 void	put_sprite(t_data *data, t_pixel a, char b);
 void	free_sprites(t_data *data);
+
+// rendering.c
+
 void	render_background(t_data *data);
 void	render_map(t_data *data);
 void	render_player(t_data *data);
@@ -153,7 +161,6 @@ void	map_checker(t_data *data);
 void	start_map_filling(t_data *data, t_pixel *p);
 int		fill_tiles(t_data *data, char *line, t_pixel grid_pos);
 int		grid_fill(t_data *data);
-size_t	get_line_len(char *str);
-void	print_map(t_data *data);
+void	grid_fill_helper(t_data *data, int uc, t_pixel grid_pos);
 
 #endif

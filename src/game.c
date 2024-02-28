@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 14:03:18 by dulrich           #+#    #+#             */
-/*   Updated: 2024/02/26 17:03:08 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/02/28 16:35:36 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 int	main(int argc, char **argv)
 {
-	t_data			data;
+	t_data	data;
 
 	if (argc != 2)
 		map_error("Wrong number of arguments.", &data, 0);
-	if (!ft_strnstr(argv[1], ".ber", ft_strlen(argv[1])))
-		map_error("Map has to be in format .ber.", &data, 0);
+	if (!ft_format(argv[1], &data))
+		map_error("Map has to be in format '.ber'.", &data, 0);
 	init_vars(&data, argv[1]);
 	parse_map(&data);
 	grid_fill(&data);
@@ -28,11 +28,34 @@ int	main(int argc, char **argv)
 	init_flags(&data);
 	init_sprites(&data);
 	render_map(&data);
-	mlx_hook(data.win_ptr, 2, (1L<<0), input_handler, &data);
-	mlx_hook(data.win_ptr, 17, (1L<<0), exit_game, &data);
-	//mlx_loop_hook(data.mlx_ptr, render_next_frame, &data);
-	//mlx_hook(data.win_ptr, 12, 0L, render_next_frame, &data);
+	mlx_hook(data.win_ptr, 2, (1L << 0), input_handler, &data);
+	mlx_hook(data.win_ptr, 17, (1L << 0), exit_game, &data);
 	mlx_loop(data.mlx_ptr);
+}
+
+int	ft_format(char *str, t_data *data)
+{
+	int		i;
+	int		len;
+	char	*format;
+
+	i = -1;
+	format = malloc(sizeof(char) * 5);
+	if (!format)
+		map_error("Problem while malloc'ing", data, 0);
+	len = ft_strlen(str);
+	if (len > 4)
+	{
+		while (++i < 4)
+			format[i] = str[len - 1 - i];
+	}
+	format[i] = '\0';
+	if (ft_strncmp(format, "reb.", 4) == 0)
+	{
+		free(format);
+		return (1);
+	}
+	return (0);
 }
 
 void	init_mlx_win_img(t_data *data)
@@ -48,24 +71,6 @@ void	init_mlx_win_img(t_data *data)
 								data->map.map_w * SIZE);
 	if (!data->img)
 		map_error("Failed to initialize the img pointer.", data, 1);
-/* 	data.address = mlx_get_data_addr(data.img, &data.bits_per_pixel, \
-										&data.size_line, &data.endian); */
-}
-
-void	init_vars(t_data *data, char *map_path)
-{
-	data->map.path = map_path;
-	data->map.map_h = 0;
-	data->map.map_w = 0;
-	data->exit_unlocked = FALSE;
-	data->access_to_exit = FALSE;
-	data->access_to_collectibles = 0;
-	data->collectible = 0;
-	data->collected = 0;
-	data->moves = 0;
-	data->won = FALSE;
-	data->exit_found = 0;
-	data->start_found = 0;
 }
 
 int	parse_map(t_data *data)
@@ -94,22 +99,6 @@ int	parse_map(t_data *data)
 		map_error("The map is not rectangular.", data, 0);
 	if (data->map.map_h == 0)
 		map_error("Map is empty.", data, 0);
-	return (0);
-}
-
-int	render_next_frame(t_data *data)
-{
-	/* if (!data->won)
-	{
-		render_map(data);
-		render_player(data);
-	} */
-	if (data->won)
-	{
-		render_background(data);
-		mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, \
-								data->win_sprite.img, 0, 0);
-	}
 	return (0);
 }
 

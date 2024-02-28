@@ -6,7 +6,7 @@
 #    By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/29 16:24:50 by dulrich           #+#    #+#              #
-#    Updated: 2024/02/08 14:53:14 by dulrich          ###   ########.fr        #
+#    Updated: 2024/02/28 16:33:38 by dulrich          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ LIBFT_DIR	= ./libft
 SRC_DIR		= ./src
 INC_DIR		= ./include
 
-SRC			= game.c utils.c fill.c checker.c sprites.c
+SRC			= game.c utils.c utils2.c fill.c checker.c sprites.c rendering.c
 OBJ			= $(SRC:%.c=%.o)
 
 LIBFT		= $(LIBFT_DIR)/libft.a

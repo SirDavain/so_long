@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 15:07:19 by dulrich           #+#    #+#             */
-/*   Updated: 2024/02/26 12:47:28 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/02/28 16:27:57 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,10 @@ int	fill_tiles(t_data *data, char *line, t_pixel grid_pos)
 	return (0);
 }
 
-int	grid_fill(t_data *data)
+void	grid_fill_helper(t_data *data, int uc, t_pixel grid_pos)
 {
-	t_pixel	grid_pos;
 	char	*line;
-	int		unknown_char;
 
-	unknown_char = 0;
-	start_map_filling(data, &grid_pos);
 	line = get_next_line(data->map.fd);
 	while (line)
 	{
@@ -51,7 +47,7 @@ int	grid_fill(t_data *data)
 		while (grid_pos.px_x < data->map.map_w)
 		{
 			if (fill_tiles(data, line, grid_pos))
-				unknown_char = 1;
+				uc = 1;
 			count_grid(data, data->map.grid[grid_pos.px_y][grid_pos.px_x], \
 																grid_pos);
 			grid_pos.px_x++;
@@ -63,6 +59,16 @@ int	grid_fill(t_data *data)
 	}
 	free(line);
 	close(data->map.fd);
+}
+
+int	grid_fill(t_data *data)
+{
+	t_pixel	grid_pos;
+	int		unknown_char;
+
+	unknown_char = 0;
+	start_map_filling(data, &grid_pos);
+	grid_fill_helper(data, unknown_char, grid_pos);
 	if (unknown_char)
 		map_error("There is an unknown character inside the map.", data, 1);
 	if (missing_walls(data))
@@ -72,16 +78,6 @@ int	grid_fill(t_data *data)
 	check_for_valid_path(data->player.position, data);
 	map_checker(data);
 	return (1);
-}
-
-size_t	get_line_len(char *str)
-{
-	unsigned int	i;
-
-	i = 0;
-	while (str[i] && str[i] != '\n')
-		i++;
-	return (i);
 }
 
 /* void	print_map(t_data *data)
