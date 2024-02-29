@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 14:39:52 by dulrich           #+#    #+#             */
-/*   Updated: 2024/02/28 15:06:45 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/02/29 12:23:15 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ int	found_unknown_char(char c)
 
 void	map_error(char *str, t_data *data, int flag)
 {
-	ft_printf("\033[1;31mError\033[0m\n");
-	ft_printf("%s\n", str);
+	ft_printf("\033[1;31mError\n");
+	ft_printf("%s\033[0m\n", str);
 	if (flag)
 	{
 		if (data->map.grid != NULL)

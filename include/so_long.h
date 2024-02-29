@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 14:03:54 by dulrich           #+#    #+#             */
-/*   Updated: 2024/02/28 16:32:49 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/02/29 12:20:07 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,6 +161,6 @@ void	map_checker(t_data *data);
 void	start_map_filling(t_data *data, t_pixel *p);
 int		fill_tiles(t_data *data, char *line, t_pixel grid_pos);
 int		grid_fill(t_data *data);
-void	grid_fill_helper(t_data *data, int uc, t_pixel grid_pos);
+void	grid_fill_helper(t_data *data, t_pixel grid_pos);
 
 #endif
