@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 08:33:17 by dulrich           #+#    #+#             */
-/*   Updated: 2024/02/22 16:22:07 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/02/29 15:54:49 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,11 @@ char	*get_next_line(int fd)
 	char		*the_next_line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
+	{
+		if (read_line != NULL)
+			free(read_line);
 		return (NULL);
+	}
 	read_line = read_newline(fd, read_line);
 	if (!read_line)
 		return (NULL);

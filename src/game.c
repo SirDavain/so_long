@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 14:03:18 by dulrich           #+#    #+#             */
-/*   Updated: 2024/02/29 12:42:43 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/02/29 17:07:40 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int	parse_map(t_data *data)
 		map_error("Map was not found.", data, 0);
 	line = get_next_line(data->map.fd);
 	if (!line)
-		map_error("Couldn't read the line.", data, 1);
+		map_error("Couldn't read the line.", data, 0);
 	while (line)
 	{
 		data->map.map_h++;
@@ -95,7 +95,10 @@ int	parse_map(t_data *data)
 		free(line);
 		line = get_next_line(data->map.fd);
 		if (!line)
-			map_error("Couldn't read the line.", data, 1);
+		{
+			get_next_line(-1);
+			map_error("Couldn't read the line.", data, 0);
+		}
 	}
 	free(line);
 	close(data->map.fd);

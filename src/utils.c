@@ -6,20 +6,33 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 13:58:18 by dulrich           #+#    #+#             */
-/*   Updated: 2024/02/29 12:11:26 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/02/29 16:31:44 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	allocate_line(t_data *data, t_pixel grid_pos)
+int	allocate_line(t_data *data, t_pixel grid_pos)
 {
 	data->map.grid[grid_pos.px_y] = malloc((data->map.map_w) * \
 														sizeof(char));
+	if (!(data->map.grid[grid_pos.px_y]))
+	{
+		get_next_line(-1);
+		ft_free(data, 'g');
+		ft_free(data, 't');
+		return (1);
+	}
 	data->map.tiles[grid_pos.px_y] = malloc((data->map.map_w) * \
 														sizeof(t_tile));
-	if (!(data->map.tiles[grid_pos.px_y]) || !(data->map.grid[grid_pos.px_y]))
-		map_error("Error when allocating space.", data, 1);
+	if (!(data->map.tiles[grid_pos.px_y]))
+	{
+		get_next_line(-1);
+		ft_free(data, 'g');
+		ft_free(data, 't');
+		return (1);
+	}
+	return (0);
 }
 
 void	count_grid(t_data *data, char c, t_pixel p)
@@ -43,7 +56,7 @@ void	ft_free(t_data *data, char a)
 	i = 0;
 	if (a == 't')
 	{
-		while (i < data->map.map_h)
+		while (i < data->map.map_h && data->map.tiles != NULL)
 		{
 			free(data->map.tiles[i]);
 			data->map.tiles[i] = NULL;
@@ -54,7 +67,7 @@ void	ft_free(t_data *data, char a)
 	}
 	else if (a == 'g')
 	{
-		while (i < data->map.map_h)
+		while (i < data->map.map_h && data->map.grid != NULL)
 		{
 			free(data->map.grid[i]);
 			data->map.grid[i] = NULL;

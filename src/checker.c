@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 14:39:52 by dulrich           #+#    #+#             */
-/*   Updated: 2024/02/29 12:23:15 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/02/29 16:54:51 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,18 @@ void	map_error(char *str, t_data *data, int flag)
 {
 	ft_printf("\033[1;31mError\n");
 	ft_printf("%s\033[0m\n", str);
-	if (flag)
+	if (flag == 1)
 	{
 		if (data->map.grid != NULL)
 			ft_free(data, 'g');
 		if (data->map.tiles != NULL)
 			ft_free(data, 't');
 	}
+	/* else if (flag == 2)
+	{
+		get_next_line(-1);
+		
+	} */
 	exit(1);
 }
 
