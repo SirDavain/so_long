@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 14:03:18 by dulrich           #+#    #+#             */
-/*   Updated: 2024/03/01 14:19:48 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/03/01 18:23:24 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	main(int argc, char **argv)
 	parse_map(&data);
 	grid_fill(&data);
 	ft_free(&data, 't');
-	init_mlx_win_img(&data);
+	init_mlx_ptrs(&data);
 	init_flags(&data);
 	init_sprites(&data);
 	render_map(&data);
@@ -55,10 +55,11 @@ int	ft_format(char *str, t_data *data)
 		free(format);
 		return (1);
 	}
+	free(format);
 	return (0);
 }
 
-void	init_mlx_win_img(t_data *data)
+void	init_mlx_ptrs(t_data *data)
 {
 	data->mlx_ptr = mlx_init();
 	if (!data->mlx_ptr)
@@ -66,11 +67,20 @@ void	init_mlx_win_img(t_data *data)
 	data->win_ptr = mlx_new_window(data->mlx_ptr, data->map.map_w * SIZE, \
 									data->map.map_h * SIZE, "so_long");
 	if (!data->win_ptr)
+	{
+		mlx_destroy_display(data->mlx_ptr);
+		free(data->mlx_ptr);
 		map_error("Failed to initialize the window pointer.", data, 1);
+	}
 	data->img = mlx_new_image(data->mlx_ptr, data->map.map_h * SIZE, \
 								data->map.map_w * SIZE);
 	if (!data->img)
+	{
+		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
+		mlx_destroy_display(data->mlx_ptr);
+		free(data->mlx_ptr);
 		map_error("Failed to initialize the img pointer.", data, 1);
+	}
 }
 
 int	parse_map(t_data *data)
@@ -97,22 +107,14 @@ int	parse_map(t_data *data)
 	close(data->map.fd);
 	if (not_rectangular)
 		map_error("The map is not rectangular.", data, 0);
+	if (data->map.map_w > 40 || data->map.map_h > 21)
+		map_error("The map is too big for the screen.", data, 0);
 	return (0);
 }
 
 int	exit_game(t_data *data)
 {
 	ft_free(data, 'g');
-	mlx_destroy_image(data->mlx_ptr, data->bgr_sprite.img);
-	mlx_destroy_image(data->mlx_ptr, data->floor_sprite.img);
-	mlx_destroy_image(data->mlx_ptr, data->wall_sprite.img);
-	mlx_destroy_image(data->mlx_ptr, data->p_sprite.img);
-	mlx_destroy_image(data->mlx_ptr, data->clctbl_sprite.img);
-	mlx_destroy_image(data->mlx_ptr, data->exit_sprite.img);
-	mlx_destroy_image(data->mlx_ptr, data->win_sprite.img);
-	mlx_destroy_image(data->mlx_ptr, data->img);
-	mlx_destroy_window(data->mlx_ptr, data->win_ptr);
-	mlx_destroy_display(data->mlx_ptr);
-	free(data->mlx_ptr);
+	free_sprites(data);
 	exit(0);
 }

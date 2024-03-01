@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 14:03:54 by dulrich           #+#    #+#             */
-/*   Updated: 2024/03/01 15:38:21 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/03/01 18:41:54 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ typedef struct s_sprite
 
 typedef struct s_sprite_flag
 {
-	int	bgr_sprite;
 	int	floor_sprite;
 	int	wall_sprite;
 	int	p_sprite;
@@ -65,6 +64,7 @@ typedef struct s_tile
 typedef struct s_player
 {
 	t_pixel	position;
+	t_pixel	last_pos;
 	t_pixel	start;
 }				t_player;
 
@@ -85,12 +85,9 @@ typedef struct s_data
 	void			*win_ptr;
 	void			*mlx_ptr;
 	void			*img;
-	int				size_x;
-	int				size_y;
 	t_player		player;
 	t_map			map;
 	t_sprite_flag	flag;
-	t_sprite		bgr_sprite;
 	t_sprite		floor_sprite;
 	t_sprite		wall_sprite;
 	t_sprite		p_sprite;
@@ -112,7 +109,7 @@ typedef struct s_data
 
 int		main(int argc, char **argv);
 int		parse_map(t_data *data);
-void	init_mlx_win_img(t_data *data);
+void	init_mlx_ptrs(t_data *data);
 int		exit_game(t_data *data);
 int		ft_format(char *str, t_data *data);
 
@@ -140,7 +137,6 @@ void	free_sprites(t_data *data);
 
 // rendering.c
 
-void	render_background(t_data *data);
 void	render_map(t_data *data);
 void	render_player(t_data *data);
 

@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 02:01:40 by dulrich           #+#    #+#             */
-/*   Updated: 2024/02/28 16:30:10 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/03/01 16:54:49 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 
 void	init_sprites(t_data *data)
 {
-	data->bgr_sprite.img = ft_load_sprite(data, "img/bgr_sprite.xpm", \
-		&data->bgr_sprite.pixel_w, &data->bgr_sprite.pixel_h);
-	data->flag.bgr_sprite = 1;
 	data->floor_sprite.img = ft_load_sprite(data, "img/floor_sprite.xpm", \
 		&data->floor_sprite.pixel_w, &data->floor_sprite.pixel_h);
 	data->flag.floor_sprite = 1;
@@ -45,10 +42,6 @@ void	*ft_load_sprite(t_data *data, char *str, int *px_w, int *px_h)
 	if (!sprite)
 	{
 		free_sprites(data);
-		mlx_destroy_image(data->mlx_ptr, data->img);
-		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
-		mlx_destroy_display(data->mlx_ptr);
-		free(data->mlx_ptr);
 		map_error("A sprite couldn't be found.", data, 1);
 	}
 	return (sprite);
@@ -56,8 +49,6 @@ void	*ft_load_sprite(t_data *data, char *str, int *px_w, int *px_h)
 
 void	free_sprites(t_data *data)
 {
-	if (data->flag.bgr_sprite)
-		mlx_destroy_image(data->mlx_ptr, data->bgr_sprite.img);
 	if (data->flag.floor_sprite)
 		mlx_destroy_image(data->mlx_ptr, data->floor_sprite.img);
 	if (data->flag.wall_sprite)
@@ -70,6 +61,10 @@ void	free_sprites(t_data *data)
 		mlx_destroy_image(data->mlx_ptr, data->exit_sprite.img);
 	if (data->flag.win_sprite)
 		mlx_destroy_image(data->mlx_ptr, data->win_sprite.img);
+	mlx_destroy_image(data->mlx_ptr, data->img);
+	mlx_destroy_window(data->mlx_ptr, data->win_ptr);
+	mlx_destroy_display(data->mlx_ptr);
+	free(data->mlx_ptr);
 }
 
 void	put_sprite(t_data *data, t_pixel a, char b)
@@ -88,6 +83,12 @@ void	put_sprite(t_data *data, t_pixel a, char b)
 			data->clctbl_sprite.img, a.px_x, a.px_y);
 	}
 	else if (b == 'E')
-		mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, \
-			data->exit_sprite.img, a.px_x, a.px_y);
+	{
+		if (data->exit_unlocked == TRUE)
+			mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, \
+				data->win_sprite.img, a.px_x, a.px_y);
+		else
+			mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, \
+				data->exit_sprite.img, a.px_x, a.px_y);
+	}
 }

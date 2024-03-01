@@ -6,33 +6,11 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 16:29:25 by dulrich           #+#    #+#             */
-/*   Updated: 2024/02/28 16:36:01 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/03/01 18:46:43 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
-void	render_background(t_data *data)
-{
-	t_pixel	start;
-	t_pixel	end;
-
-	start.px_x = 0;
-	start.px_y = 0;
-	end.px_x = data->map.map_w * SIZE;
-	end.px_y = data->map.map_h * SIZE;
-	while (start.px_y < end.px_y)
-	{
-		while (start.px_x < end.px_x)
-		{
-			mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, \
-				data->bgr_sprite.img, start.px_x, start.px_y);
-			start.px_x += SIZE;
-		}
-		start.px_x = 0;
-		start.px_y += SIZE;
-	}
-}
 
 void	render_map(t_data *data)
 {
@@ -65,4 +43,8 @@ void	render_player(t_data *data)
 {
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->p_sprite.img, \
 	data->player.position.px_x * SIZE, data->player.position.px_y * SIZE);
+	if ((data->player.position.px_y != data->player.last_pos.px_y || \
+		data->player.position.px_x != data->player.last_pos.px_x))
+		mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, \
+			data->floor_sprite.img, data->player.last_pos.px_x * SIZE, data->player.last_pos.px_y * SIZE);
 }

@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 16:27:07 by dulrich           #+#    #+#             */
-/*   Updated: 2024/03/01 13:26:27 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/03/01 16:54:11 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ size_t	get_line_len(char *str)
 
 void	put_win_screen(t_data *data)
 {
-	render_background(data);
 	ft_printf("\033[1;32mCongratulations, you won in %d moves!\033[0m\n", \
 				data->moves);
 	exit_game(data);
@@ -53,7 +52,6 @@ void	init_vars(t_data *data, char *map_path)
 
 void	init_flags(t_data *data)
 {
-	data->flag.bgr_sprite = 0;
 	data->flag.floor_sprite = 0;
 	data->flag.wall_sprite = 0;
 	data->flag.p_sprite = 0;
