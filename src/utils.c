@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 13:58:18 by dulrich           #+#    #+#             */
-/*   Updated: 2024/03/01 18:52:08 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/03/01 18:58:48 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,10 @@ void	count_grid(t_data *data, char c, t_pixel p)
 	else if (data->map.grid[p.px_y][p.px_x] == 'C')
 		data->collectible++;
 	else if (data->map.grid[p.px_y][p.px_x] == 'E')
+	{
 		data->exit_found++;
+		data->map.exit = p;
+	}
 }
 
 void	ft_free(t_data *data, char a)
@@ -99,15 +102,11 @@ int	input_handler(int keycode, t_data *data)
 
 void	update_player_pos(t_data *data, t_pixel new_pos)
 {
-	t_pixel	tmp;
-
 	if (data->map.grid[new_pos.px_y][new_pos.px_x] != '1')
 	{
-		ft_printf("Total moves: %d\n", ++data->moves);
-		tmp = data->player.last_pos;
-		if (data->map.grid[new_pos.px_y][new_pos.px_x] == 'E')
 		data->player.last_pos = data->player.position;
 		data->player.position = new_pos;
+		ft_printf("Total moves: %d\n", ++data->moves);
 		render_player(data);
 		if (data->map.grid[new_pos.px_y][new_pos.px_x] == 'C')
 		{
@@ -121,8 +120,6 @@ void	update_player_pos(t_data *data, t_pixel new_pos)
 		}
 		else if (data->map.grid[new_pos.px_y][new_pos.px_x] == 'E')
 		{
-			data->player.last_pos = tmp;
-			//render_player(data);
 			if (data->exit_unlocked)
 				put_win_screen(data);
 		}

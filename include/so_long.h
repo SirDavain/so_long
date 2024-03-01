@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 14:03:54 by dulrich           #+#    #+#             */
-/*   Updated: 2024/03/01 18:41:54 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/03/01 18:57:09 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ typedef struct s_map
 {
 	char	*path;
 	char	**grid;
+	t_pixel	exit;
 	size_t	map_h;
 	size_t	map_w;
 	t_tile	**tiles;

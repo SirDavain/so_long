@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 16:29:25 by dulrich           #+#    #+#             */
-/*   Updated: 2024/03/01 18:46:43 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/03/01 19:19:10 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,17 @@ void	render_player(t_data *data)
 {
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->p_sprite.img, \
 	data->player.position.px_x * SIZE, data->player.position.px_y * SIZE);
+	if ((data->player.last_pos.px_y == data->map.exit.px_y) && \
+		(data->player.last_pos.px_x == data->map.exit.px_x))
+	{
+		mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, \
+			data->exit_sprite.img, data->player.last_pos.px_x * SIZE, \
+			data->player.last_pos.px_y * SIZE);
+		return ;
+	}
 	if ((data->player.position.px_y != data->player.last_pos.px_y || \
 		data->player.position.px_x != data->player.last_pos.px_x))
 		mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, \
-			data->floor_sprite.img, data->player.last_pos.px_x * SIZE, data->player.last_pos.px_y * SIZE);
+			data->floor_sprite.img, data->player.last_pos.px_x * SIZE, \
+			data->player.last_pos.px_y * SIZE);
 }
