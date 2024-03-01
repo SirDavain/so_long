@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 14:03:54 by dulrich           #+#    #+#             */
-/*   Updated: 2024/02/29 16:27:37 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/03/01 11:30:23 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ int		ft_format(char *str, t_data *data);
 
 // utils.c
 
-int		allocate_line(t_data *data, t_pixel grid_pos);
+void	allocate_line(t_data *data, t_pixel grid_pos, char *line);
 void	count_grid(t_data *data, char c, t_pixel p);
 void	ft_free(t_data *data, char a);
 int		input_handler(int keycode, t_data *data);
@@ -161,6 +161,6 @@ void	map_checker(t_data *data);
 void	start_map_filling(t_data *data, t_pixel *p);
 int		fill_tiles(t_data *data, char *line, t_pixel grid_pos);
 int		grid_fill(t_data *data);
-void	grid_fill_helper(t_data *data, t_pixel grid_pos, int uc);
+void	grid_fill_helper(t_data *data, t_pixel grid_pos);
 
 #endif

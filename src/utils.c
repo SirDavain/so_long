@@ -6,33 +6,32 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 13:58:18 by dulrich           #+#    #+#             */
-/*   Updated: 2024/02/29 16:31:44 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/03/01 12:08:36 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-int	allocate_line(t_data *data, t_pixel grid_pos)
+void	allocate_line(t_data *data, t_pixel grid_pos, char *line)
 {
 	data->map.grid[grid_pos.px_y] = malloc((data->map.map_w) * \
 														sizeof(char));
 	if (!(data->map.grid[grid_pos.px_y]))
 	{
-		get_next_line(-1);
+		free(line);
 		ft_free(data, 'g');
 		ft_free(data, 't');
-		return (1);
+		map_error("Issue with allocating space.", data, 0);
 	}
 	data->map.tiles[grid_pos.px_y] = malloc((data->map.map_w) * \
 														sizeof(t_tile));
 	if (!(data->map.tiles[grid_pos.px_y]))
 	{
-		get_next_line(-1);
+		free(line);
 		ft_free(data, 'g');
 		ft_free(data, 't');
-		return (1);
+		map_error("Issue with allocating space.", data, 0);
 	}
-	return (0);
 }
 
 void	count_grid(t_data *data, char c, t_pixel p)

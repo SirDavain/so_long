@@ -6,7 +6,7 @@
 #    By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/29 16:24:50 by dulrich           #+#    #+#              #
-#    Updated: 2024/02/28 16:33:38 by dulrich          ###   ########.fr        #
+#    Updated: 2024/03/01 10:18:53 by dulrich          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,12 +16,16 @@ CC 			= cc
 CFLAGS		= -Wall -Wextra -Werror -g
 MLX_FLAGS	= -lX11 -lm -lbsd -lXext -lmlx
 
-LIBFT_DIR	= ./libft 
-SRC_DIR		= ./src
-INC_DIR		= ./include
+LIBFT_DIR	= libft 
+SRC_DIR		= src
+OBJ_DIR		= obj
+INC_DIR		= include
 
-SRC			= game.c utils.c utils2.c fill.c checker.c sprites.c rendering.c
-OBJ			= $(SRC:%.c=%.o)
+SRC			= $(SRC_DIR)/game.c $(SRC_DIR)/utils.c $(SRC_DIR)/utils2.c \
+				$(SRC_DIR)/fill.c $(SRC_DIR)/checker.c \
+				$(SRC_DIR)/sprites.c $(SRC_DIR)/rendering.c
+OBJ			= $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
+#$(SRC:%.c=%.o)
 
 LIBFT		= $(LIBFT_DIR)/libft.a
 LIBS		= -L$(LIBFT_DIR) -lft
@@ -33,7 +37,7 @@ all: $(NAME)
 $(NAME): $(LIBFT) $(OBJ)
 	$(CC) $(CFLAGS) $(OBJ) $(HEADERS) $(LIBS) $(MLX_FLAGS) -o $(NAME)
 
-%.o: $(SRC_DIR)/%.c
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c #%.o: $(SRC_DIR)/%.c
 	$(CC) $(CFLAGS) $(HEADERS) -c $< -o $@
 
 $(LIBFT):

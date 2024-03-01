@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 14:03:18 by dulrich           #+#    #+#             */
-/*   Updated: 2024/02/29 17:07:40 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/03/01 12:20:31 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,6 @@ int	parse_map(t_data *data)
 	int		not_rectangular;
 
 	not_rectangular = 0;
-	data->map.fd = open(data->map.path, O_RDONLY);
-	if (data->map.fd < 0)
-		map_error("Map was not found.", data, 0);
 	line = get_next_line(data->map.fd);
 	if (!line)
 		map_error("Couldn't read the line.", data, 0);
@@ -94,18 +91,13 @@ int	parse_map(t_data *data)
 			not_rectangular = 1;
 		free(line);
 		line = get_next_line(data->map.fd);
-		if (!line)
-		{
-			get_next_line(-1);
+		if (ft_strncmp(line, "Error", 5) == 0)
 			map_error("Couldn't read the line.", data, 0);
-		}
 	}
 	free(line);
 	close(data->map.fd);
 	if (not_rectangular)
 		map_error("The map is not rectangular.", data, 0);
-	if (data->map.map_h == 0)
-		map_error("Map is empty.", data, 0);
 	return (0);
 }
 

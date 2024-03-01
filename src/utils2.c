@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 16:27:07 by dulrich           #+#    #+#             */
-/*   Updated: 2024/02/29 11:54:39 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/03/01 11:15:34 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,9 @@ void	put_win_screen(t_data *data)
 void	init_vars(t_data *data, char *map_path)
 {
 	data->map.path = map_path;
+	data->map.fd = open(data->map.path, O_RDONLY);
+	if (data->map.fd < 0)
+		map_error("Map was not found.", data, 0);
 	data->map.map_h = 0;
 	data->map.map_w = 0;
 	data->exit_unlocked = FALSE;
