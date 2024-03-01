@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 14:03:18 by dulrich           #+#    #+#             */
-/*   Updated: 2024/03/01 12:20:31 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/03/01 14:19:48 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,10 +91,9 @@ int	parse_map(t_data *data)
 			not_rectangular = 1;
 		free(line);
 		line = get_next_line(data->map.fd);
-		if (ft_strncmp(line, "Error", 5) == 0)
-			map_error("Couldn't read the line.", data, 0);
 	}
-	free(line);
+	if (data->map.map_h < 3)
+		map_error("The map is not big enough.", data, 0);
 	close(data->map.fd);
 	if (not_rectangular)
 		map_error("The map is not rectangular.", data, 0);

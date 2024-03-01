@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 15:07:19 by dulrich           #+#    #+#             */
-/*   Updated: 2024/03/01 11:53:51 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/03/01 14:44:05 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@ void	start_map_filling(t_data *data, t_pixel *p)
 	if (data->map.fd < 0)
 		map_error("Map was not found.", data, 0);
 	data->map.grid = malloc(data->map.map_h * sizeof(char *));
+	if (!data->map.grid)
+		map_error("Issue while malloc'ing.", data, 1);
+	ft_bzero(data->map.grid, data->map.map_h * sizeof(char *));
 	data->map.tiles = malloc(data->map.map_h * sizeof(t_tile *));
-	if (!data->map.grid || !data->map.tiles)
-	{
-		ft_free(data, 'g');
-		ft_free(data, 't');
-		map_error("Issue while malloc'ing.", data, 0);
-	}
+	if (!data->map.tiles)
+		map_error("Issue while malloc'ing.", data, 1);
+	ft_bzero(data->map.tiles, data->map.map_h * sizeof(t_tile *));
 	p->px_x = 0;
 	p->px_y = 0;
 }
@@ -45,15 +45,18 @@ int	fill_tiles(t_data *data, char *line, t_pixel grid_pos)
 	return (0);
 }
 
-void	grid_fill_helper(t_data *data, t_pixel grid_pos)
+size_t	grid_fill_helper(t_data *data, t_pixel grid_pos)
 {
 	char	*line;
+	size_t	height;
 
+	height = 0;
 	line = get_next_line(data->map.fd);
 	if (!line)
 		map_error("Couldn't read the line.", data, 0);
 	while (line)
 	{
+		height++;
 		allocate_line(data, grid_pos, line);
 		while (grid_pos.px_x < data->map.map_w)
 		{
@@ -66,21 +69,18 @@ void	grid_fill_helper(t_data *data, t_pixel grid_pos)
 		grid_pos.px_y++;
 		free(line);
 		line = get_next_line(data->map.fd);
-		/* if (!line)
-			map_error("Couldn't read the line.", data, 0); */
 	}
-	free(line);
 	close(data->map.fd);
+	return (height);
 }
 
 int	grid_fill(t_data *data)
 {
 	t_pixel	grid_pos;
-	int		unknown_char;
 
-	unknown_char = 0;
 	start_map_filling(data, &grid_pos);
-	grid_fill_helper(data, grid_pos);
+	if (grid_fill_helper(data, grid_pos) != data->map.map_h)
+		map_error("Couldn't read the line.", data, 1);
 	if (missing_walls(data))
 		map_error("There is an issue with the walls of the map.", data, 1);
 	if (data->start_found <= 0)

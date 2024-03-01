@@ -3,6 +3,7 @@
 		"libft.h": "c",
 		"errno.h": "c",
 		"aio.h": "c",
-		"fcntl.h": "c"
+		"fcntl.h": "c",
+		"so_long.h": "c"
 	}
 }

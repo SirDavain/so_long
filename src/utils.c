@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 13:58:18 by dulrich           #+#    #+#             */
-/*   Updated: 2024/03/01 12:08:36 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/03/01 13:47:01 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,22 +55,22 @@ void	ft_free(t_data *data, char a)
 	i = 0;
 	if (a == 't')
 	{
-		while (i < data->map.map_h && data->map.tiles != NULL)
+		while (i < data->map.map_h && data->map.tiles != NULL \
+				&& data->map.tiles[i] != NULL)
 		{
 			free(data->map.tiles[i]);
-			data->map.tiles[i] = NULL;
-			i++;
+			data->map.tiles[i++] = NULL;
 		}
 		free(data->map.tiles);
 		data->map.tiles = NULL;
 	}
 	else if (a == 'g')
 	{
-		while (i < data->map.map_h && data->map.grid != NULL)
+		while (i < data->map.map_h && data->map.grid != NULL \
+				&& data->map.grid[i] != NULL)
 		{
 			free(data->map.grid[i]);
-			data->map.grid[i] = NULL;
-			i++;
+			data->map.grid[i++] = NULL;
 		}
 		free(data->map.grid);
 		data->map.grid = NULL;

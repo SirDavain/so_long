@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 14:03:54 by dulrich           #+#    #+#             */
-/*   Updated: 2024/03/01 11:30:23 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/03/01 15:38:21 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,6 @@ typedef struct s_data
 	void			*win_ptr;
 	void			*mlx_ptr;
 	void			*img;
-	char			*address;
 	int				size_x;
 	int				size_y;
 	t_player		player;
@@ -106,9 +105,6 @@ typedef struct s_data
 	int				exit_found;
 	int				access_to_exit;
 	int				access_to_collectibles;
-	int				endian;
-	int				bits_per_pixel;
-	int				size_line;
 	int				won;
 }				t_data;
 
@@ -161,6 +157,6 @@ void	map_checker(t_data *data);
 void	start_map_filling(t_data *data, t_pixel *p);
 int		fill_tiles(t_data *data, char *line, t_pixel grid_pos);
 int		grid_fill(t_data *data);
-void	grid_fill_helper(t_data *data, t_pixel grid_pos);
+size_t	grid_fill_helper(t_data *data, t_pixel grid_pos);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 16:27:07 by dulrich           #+#    #+#             */
-/*   Updated: 2024/03/01 11:15:34 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/03/01 13:26:27 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ void	init_vars(t_data *data, char *map_path)
 		map_error("Map was not found.", data, 0);
 	data->map.map_h = 0;
 	data->map.map_w = 0;
+	data->map.grid = NULL;
+	data->map.tiles = NULL;
 	data->exit_unlocked = FALSE;
 	data->access_to_exit = FALSE;
 	data->access_to_collectibles = 0;
