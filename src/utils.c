@@ -6,7 +6,7 @@
 /*   By: dulrich <dulrich@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 13:58:18 by dulrich           #+#    #+#             */
-/*   Updated: 2024/03/01 18:58:48 by dulrich          ###   ########.fr       */
+/*   Updated: 2024/03/02 15:04:46 by dulrich          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,7 @@ void	ft_free(t_data *data, char a)
 	i = 0;
 	if (a == 't')
 	{
-		while (i < data->map.map_h && data->map.tiles != NULL \
-				&& data->map.tiles[i] != NULL)
+		while (i < data->map.map_h && data->map.tiles[i] != NULL)
 		{
 			free(data->map.tiles[i]);
 			data->map.tiles[i++] = NULL;
@@ -70,8 +69,7 @@ void	ft_free(t_data *data, char a)
 	}
 	else if (a == 'g')
 	{
-		while (i < data->map.map_h && data->map.grid != NULL \
-				&& data->map.grid[i] != NULL)
+		while (i < data->map.map_h && data->map.grid[i] != NULL)
 		{
 			free(data->map.grid[i]);
 			data->map.grid[i++] = NULL;
@@ -118,10 +116,8 @@ void	update_player_pos(t_data *data, t_pixel new_pos)
 				render_map(data);
 			}
 		}
-		else if (data->map.grid[new_pos.px_y][new_pos.px_x] == 'E')
-		{
-			if (data->exit_unlocked)
-				put_win_screen(data);
-		}
+		else if (data->map.grid[new_pos.px_y][new_pos.px_x] == 'E' \
+					&& data->exit_unlocked)
+			put_win_screen(data);
 	}
 }
